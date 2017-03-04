@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ReservationAPI</name>
+    </assembly>
+    <members>
+        <member name="M:ReservationAPI.Controllers.CompanyController.Get">
+            <summary>
+            Gets a list of all companies.
+            </summary>
+            <returns>List of companies</returns>
+        </member>
+        <member name="M:ReservationAPI.Controllers.CompanyController.Get(System.Int32)">
+            <summary>
+            Gets a single company by id.
+            </summary>
+            <param name="id">The company id</param>
+            <returns>The company corresponding to the id</returns>
+        </member>
+        <member name="M:ReservationAPI.Controllers.CompanyController.Post(ReservationAPI.Models.Company)">
+            <summary>
+            Creates a new company.
+            </summary>
+            <param name="company">The company to create</param>
+        </member>
+        <member name="M:ReservationAPI.Controllers.CompanyController.Put(System.Int32,ReservationAPI.Models.Company)">
+            <summary>
+            Updates a company with new information.
+            </summary>
+            <param name="id">The company id</param>
+            <param name="company">A company object containing the new information</param>
+        </member>
+        <member name="M:ReservationAPI.Controllers.CompanyController.Delete(System.Int32)">
+            <summary>
+            Deletes a company by id.
+            </summary>
+            <param name="id">The company id</param>
+        </member>
+    </members>
+</doc>
