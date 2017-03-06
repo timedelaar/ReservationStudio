@@ -24,7 +24,7 @@
 	{
 		"outputFileName": "wwwroot/js/app.js",
 		"inputFiles": [
-			"wwwroot/app/*"
+			"wwwroot/app/**/*.js"
 		],
 		"minify": { "enabled": false },
 		"sourceMap": false
@@ -32,7 +32,7 @@
 	{
 		"outputFileName": "wwwroot/js/app.min.js",
 		"inputFiles": [
-			"wwwroot/app/*"
+			"wwwroot/app/**/*.js"
 		],
 		"minify": { "enabled": true, "renameLocals": true },
 		"sourceMap": true

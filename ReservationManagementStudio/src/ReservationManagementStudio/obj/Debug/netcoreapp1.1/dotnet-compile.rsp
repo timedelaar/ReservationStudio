@@ -197,6 +197,7 @@
 --reference:C:\Users\timed\.nuget\packages\System.Xml.ReaderWriter\4.3.0\ref\netstandard1.3\System.Xml.ReaderWriter.dll
 --reference:C:\Users\timed\.nuget\packages\System.Xml.XDocument\4.3.0\ref\netstandard1.3\System.Xml.XDocument.dll
 --resource:"C:\Users\timed\Documents\school\Blok-H\AngularJS\Team Opdracht\ReservationManagementStudio\src\ReservationManagementStudio\obj\Debug\netcoreapp1.1\ReservationManagementStudiodotnet-compile.deps.json",ReservationManagementStudio.deps.json
+C:\Users\timed\Documents\school\Blok-H\AngularJS\Team Opdracht\ReservationManagementStudio\src\ReservationManagementStudio\AppSettings.cs
 C:\Users\timed\Documents\school\Blok-H\AngularJS\Team Opdracht\ReservationManagementStudio\src\ReservationManagementStudio\Program.cs
 C:\Users\timed\Documents\school\Blok-H\AngularJS\Team Opdracht\ReservationManagementStudio\src\ReservationManagementStudio\Startup.cs
 C:\Users\timed\Documents\school\Blok-H\AngularJS\Team Opdracht\ReservationManagementStudio\src\ReservationManagementStudio\Controllers\HomeController.cs

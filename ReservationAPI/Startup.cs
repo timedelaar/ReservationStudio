@@ -32,21 +32,27 @@ namespace ReservationAPI
         public void ConfigureServices(IServiceCollection services)
         {
 			// Add framework services.
+			services.AddCors();
+
 			services.AddDbContext<ReservationAPIDataContext>(options =>
 			{
-				options.UseMySQL(Configuration.GetConnectionString("production"));
+				var connectionString = Configuration["ConnectionStrings:Production"];
+				options.UseMySQL(connectionString);
 			});
-            services.AddMvc();
 
 			services.AddSwaggerGen(c =>
 			{
-				c.SwaggerDoc("v1", new Info {
-					Title = "Reservation API", Version = "v1"
+				c.SwaggerDoc("v1", new Info
+				{
+					Title = "Reservation API",
+					Version = "v1"
 				});
 				var BasePath = PlatformServices.Default.Application.ApplicationBasePath;
 				var XmlPath = Path.Combine(BasePath, "ReservationAPI.xml");
 				c.IncludeXmlComments(XmlPath);
 			});
+
+			services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +63,11 @@ namespace ReservationAPI
 			{
 				app.UseDeveloperExceptionPage();
 			}
+
+			app.UseCors(builder =>
+			{
+				builder.AllowAnyOrigin();
+			});
 
 			app.UseSwagger();
 
