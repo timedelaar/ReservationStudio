@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Models;
+using Microsoft.AspNetCore.Http;
 
 
 namespace ReservationAPI.Controllers
@@ -23,7 +24,8 @@ namespace ReservationAPI.Controllers
 		[HttpGet]
         public IEnumerable<Reservation> Get()
         {
-            return new List<Reservation>();
+            var reservationList = _DataContext.Reservations.ToList<Reservation>();
+            return reservationList;
         }
 
         // Get a single reservation by Id
@@ -37,23 +39,60 @@ namespace ReservationAPI.Controllers
         // Create a new reservation
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Reservation reservation)
+        public IActionResult Post([FromBody]Reservation reservation)
         {
-            
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            _DataContext.Reservations.Add(reservation);
+            try
+            {
+                _DataContext.SaveChanges();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status409Conflict);
+            }
+
+            return CreatedAtAction(
+                nameof(ReservationController.Get),
+                new { id = reservation.Id }, reservation
+                );
+
         }
 
         // Update the info of a reservation
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Reservation reservation)
+        public IActionResult Put(int id, [FromBody]Reservation reservation)
         {
+            if (reservation == null || reservation.Id != id)
+            {
+                return BadRequest();
+            }
+
+            var item = _DataContext.Reservations.Find(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            _DataContext.Reservations.Update(item);
+            return new NoContentResult();
         }
 
         // Delete a reservation by Id
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var item = _DataContext.Reservations.Find(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
+            _DataContext.Reservations.Remove(item);
+            return new NoContentResult();
         }
     }
 }
