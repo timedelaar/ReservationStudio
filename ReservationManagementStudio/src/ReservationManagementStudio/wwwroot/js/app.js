@@ -17,10 +17,15 @@ var rootUrl = "/app/";
 			controllerAs: 'ctrl'
 		})
 		.when('/Company/', {
-			templateUrl: rootUrl + 'Company/Index.html',
-			controller: 'CompanyController',
-			controllerAs: 'ctrl'
+			templateUrl: rootUrl + 'Company/company.html',
+			controller: 'companyController',
+			controllerAs: 'companyList'
 		})
+        .when("/Company/CompanyAdd", {
+            templateUrl: rootUrl + "Company/companyAdd.html",
+            controller: "companyController",
+            controllerAs: "companyList"
+        })        
 		.when('/Reservation/', {
 			templateUrl: rootUrl + 'Reservation/Index.html',
 			controller: 'ReservationController',
@@ -41,13 +46,49 @@ var rootUrl = "/app/";
 		});
 	}
 })();
-(function () {
-	angular.module('ReservationStudio').controller('CompanyController', [companyController]);
+angular.module('ReservationStudio').controller('companyController', function ($location, companyService) {
+    var companyList = this;
 
-	function companyController() {
+    companyList.companies = function () {
+        return companyService.getCompanies()
+    };
 
-	}
-})();
+    companyList.addCompany = function () {
+        companyList.companies().push({ name: companyList.name, employees: companyList.employees, location: companyList.location });
+        $('#confirmAddCompany').modal('hide');
+        $('#confirmAddCompany').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        $location.path('/Company/');
+        console.log(companyList.companies());
+    };
+});
+angular.module('ReservationStudio').service('companyService', function ($q, $http) {
+    var companies = [];
+    function loadCompanies() {
+        $http.get("companies.json").then(function success(response) {
+            companies = response.data.companies;
+            console.log(companies);
+        });
+    }
+
+    loadCompanies();
+
+    function clearCompanies() {
+        companies = [];
+    }
+    return {
+        getCompanies: function () { return companies },
+        clearCompanies: clearCompanies
+    }
+})
+angular.module('ReservationStudio').directive("ngCompanyDetails", function () {
+    return {
+        templateUrl: rootUrl + "Company/companyDetails.html",
+        scope: {
+            company: "="
+        }
+    }
+});
 (function () {
 	'use strict';
 	angular.module('ReservationStudio').controller('HomeController', [HomeController]);

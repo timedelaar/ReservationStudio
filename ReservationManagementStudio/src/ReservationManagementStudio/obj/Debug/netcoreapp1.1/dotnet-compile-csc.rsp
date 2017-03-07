@@ -193,6 +193,7 @@
 -r:"C:\Users\Patri\.nuget\packages\System.Xml.ReaderWriter\4.3.0\ref\netstandard1.3\System.Xml.ReaderWriter.dll"
 -r:"C:\Users\Patri\.nuget\packages\System.Xml.XDocument\4.3.0\ref\netstandard1.3\System.Xml.XDocument.dll"
 -resource:"D:\Users\Patrick\Documents\HHS\INF-H\GroupAssignment\ReservationStudio\ReservationManagementStudio\src\ReservationManagementStudio\obj\Debug\netcoreapp1.1\ReservationManagementStudiodotnet-compile.deps.json",ReservationManagementStudio.deps.json
+"D:\Users\Patrick\Documents\HHS\INF-H\GroupAssignment\ReservationStudio\ReservationManagementStudio\src\ReservationManagementStudio\AppSettings.cs"
 "D:\Users\Patrick\Documents\HHS\INF-H\GroupAssignment\ReservationStudio\ReservationManagementStudio\src\ReservationManagementStudio\Program.cs"
 "D:\Users\Patrick\Documents\HHS\INF-H\GroupAssignment\ReservationStudio\ReservationManagementStudio\src\ReservationManagementStudio\Startup.cs"
 "D:\Users\Patrick\Documents\HHS\INF-H\GroupAssignment\ReservationStudio\ReservationManagementStudio\src\ReservationManagementStudio\Controllers\HomeController.cs"
