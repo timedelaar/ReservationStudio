@@ -38,12 +38,12 @@ var rootUrl = "/app/";
 		})
 		.when('/Room/', {
 			templateUrl: rootUrl + 'Room/room.html',
-			controller: 'RoomController',
+			controller: 'roomController',
 			controllerAs: 'ctrl'
 		})
 		.when('/Room/RoomAdd', {
 		    templateUrl: rootUrl + 'Room/roomAdd.html',
-		    controller: 'RoomController',
+		    controller: 'roomController',
 		    controllerAs: 'ctrl'
 		})
 		.otherwise({
@@ -173,7 +173,7 @@ angular.module('ReservationStudio').controller('roomController', function ($loca
     var roomList = this;
 
     roomList.rooms = function () {
-        return roomService.getRooms()
+        return roomService.getRooms();
     };
 
     roomList.addRoom = function () {
@@ -182,7 +182,6 @@ angular.module('ReservationStudio').controller('roomController', function ($loca
         $('#confirmAddRoom').removeClass('modal-open');
         $('.modal-backdrop').remove();
         $location.path('/Room/');
-        console.log(roomList.rooms());
     };
 });
 angular.module('ReservationStudio').service('roomService', function ($q, $http) {

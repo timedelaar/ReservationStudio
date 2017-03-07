@@ -2,7 +2,7 @@
     var roomList = this;
 
     roomList.rooms = function () {
-        return roomService.getRooms()
+        return roomService.getRooms();
     };
 
     roomList.addRoom = function () {
@@ -11,6 +11,5 @@
         $('#confirmAddRoom').removeClass('modal-open');
         $('.modal-backdrop').remove();
         $location.path('/Room/');
-        console.log(roomList.rooms());
     };
 });
