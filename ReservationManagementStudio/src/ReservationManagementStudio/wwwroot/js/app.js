@@ -55,25 +55,39 @@ angular.module('ReservationStudio').controller('companyController', function ($l
     var companyList = this;
 
     companyList.companies = function () {
-        return companyService.getCompanies()
+        return companyService.getCompanies();
     };
-
+    
     companyList.addCompany = function () {
-        companyList.companies().push({ name: companyList.name, employees: companyList.employees, location: companyList.location });
+        var company = {
+            name: companyList.name,
+            employees: companyList.employees,
+            location: companyList.location
+        };
+        companyService.addCompany(company);
+
         $('#confirmAddCompany').modal('hide');
         $('#confirmAddCompany').removeClass('modal-open');
         $('.modal-backdrop').remove();
         $location.path('/Company/');
-        console.log(companyList.companies());
     };
+
+        //companyList.companies().push({ name: companyList.name, employees: companyList.employees, location: companyList.location });
 });
 angular.module('ReservationStudio').service('companyService', function ($q, $http) {
     var companies = [];
     function loadCompanies() {
-        $http.get("companies.json").then(function success(response) {
-            companies = response.data.companies;
-            console.log(companies);
+        $http.get(appSettings.reservationServer + "Company").then(function success(response) {
+            companies = response.data;
         });
+    }
+
+    function addCompany(company) {
+        $http({
+            method: "POST",
+            url: appSettings.reservationServer + "Company",
+            data: company
+        })
     }
 
     loadCompanies();
@@ -83,7 +97,8 @@ angular.module('ReservationStudio').service('companyService', function ($q, $htt
     }
     return {
         getCompanies: function () { return companies },
-        clearCompanies: clearCompanies
+        clearCompanies: clearCompanies,
+        addCompany: addCompany
     }
 })
 angular.module('ReservationStudio').directive("ngCompanyDetails", function () {
@@ -94,6 +109,24 @@ angular.module('ReservationStudio').directive("ngCompanyDetails", function () {
         }
     }
 });
+(function () {
+	angular.module('ReservationStudio').service('AgendaService', ['$http', AgendaService]);
+
+	function AgendaService($http) {
+		return {
+			get: get
+		};
+
+		function get() {
+			return $http({
+				method: 'GET',
+				url: appSettings.reservationServer + 'Agenda'
+			}).then(function success(response) {
+				return response.data;
+			});
+		}
+	}
+})();
 (function () {
 	'use strict';
 	angular.module('ReservationStudio').controller('HomeController', [HomeController]);
