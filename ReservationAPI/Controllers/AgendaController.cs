@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ReservationAPI.Models;
 using ReservationAPI.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,7 +24,15 @@ namespace ReservationAPI.Controllers
         [HttpGet]
         public IEnumerable<AgendaViewModel> Get()
         {
-			return null;
+			var query = from room in _DataContext.Rooms
+						join reservation in _DataContext.Reservations on room.Id equals reservation.RoomId
+						select new
+						{
+							ReservationId = reservation.Id,
+							RoomId = room.Id
+						};
+
+
         }
 
         // GET api/values/5

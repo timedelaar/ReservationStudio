@@ -6,9 +6,11 @@ using ReservationAPI.Models;
 
 namespace ReservationAPI.ViewModels
 {
-    public class AgendaViewModel
-    {
+	public class AgendaViewModel
+	{
 		public Room Room { get; set; }
+
+		public DateTime Date { get; set; }
 
 		public Reservation Morning { get; set; }
 
