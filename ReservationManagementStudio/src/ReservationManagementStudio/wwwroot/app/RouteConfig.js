@@ -30,9 +30,14 @@
 			}
 		})
 		.when('/Room/', {
-			templateUrl: rootUrl + 'Room/Index.html',
+			templateUrl: rootUrl + 'Room/room.html',
 			controller: 'RoomController',
 			controllerAs: 'ctrl'
+		})
+		.when('/Room/RoomAdd', {
+		    templateUrl: rootUrl + 'Room/roomAdd.html',
+		    controller: 'RoomController',
+		    controllerAs: 'ctrl'
 		})
 		.otherwise({
 			redirectTo: '/'
