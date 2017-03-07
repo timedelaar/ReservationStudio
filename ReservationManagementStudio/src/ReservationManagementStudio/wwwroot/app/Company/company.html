@@ -1,0 +1,22 @@
+﻿<div class="row">
+    <h1 class="page-header">Companies</h1>
+</div>
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="list-group">
+            <button type="button" class="list-group-item" ng-click="companyList.selectedCompany = company" ng-repeat="company in companyList.companies()">
+                    {{company.name}}            
+            </button>
+        </div>
+
+        <div class="row text-center">
+            <a href="#/Company/CompanyAdd/" class="btn btn-default">Add New Company</a>
+        </div>
+    </div>
+
+    <div class="col-sm-9">
+        <div ng-company-details company="companyList.selectedCompany"></div>
+    </div>
+</div>
+

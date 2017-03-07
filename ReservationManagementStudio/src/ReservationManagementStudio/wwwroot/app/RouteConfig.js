@@ -10,10 +10,15 @@
 			controllerAs: 'ctrl'
 		})
 		.when('/Company/', {
-			templateUrl: rootUrl + 'Company/Index.html',
-			controller: 'CompanyController',
-			controllerAs: 'ctrl'
+			templateUrl: rootUrl + 'Company/company.html',
+			controller: 'companyController',
+			controllerAs: 'companyList'
 		})
+        .when("/Company/CompanyAdd", {
+            templateUrl: rootUrl + "Company/companyAdd.html",
+            controller: "companyController",
+            controllerAs: "companyList"
+        })        
 		.when('/Reservation/', {
 			templateUrl: rootUrl + 'Reservation/Index.html',
 			controller: 'ReservationController',
