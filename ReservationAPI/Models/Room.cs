@@ -7,5 +7,8 @@ namespace ReservationAPI.Models
 {
     public class Room
     {
+        public int RoomNumber { get; set; }
+        public string RoomDescription { get; set; }
+        public int MaxAmount { get; set; }
     }
 }

@@ -37,9 +37,14 @@ var rootUrl = "/app/";
 			}
 		})
 		.when('/Room/', {
-			templateUrl: rootUrl + 'Room/Index.html',
+			templateUrl: rootUrl + 'Room/room.html',
 			controller: 'RoomController',
 			controllerAs: 'ctrl'
+		})
+		.when('/Room/RoomAdd', {
+		    templateUrl: rootUrl + 'Room/roomAdd.html',
+		    controller: 'RoomController',
+		    controllerAs: 'ctrl'
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -123,10 +128,46 @@ angular.module('ReservationStudio').directive("ngCompanyDetails", function () {
 		};
 	}
 })();
-(function () {
-	angular.module('ReservationStudio').controller('RoomController', [roomController]);
+angular.module('ReservationStudio').directive("ngRoomDetails", function () {
+    return {
+        templateUrl: rootUrl + "Room/roomDetails.html",
+        scope: {
+            company: "="
+        }
+    }
+});
+angular.module('ReservationStudio').controller('roomController', function ($location, roomService) {
+    var roomList = this;
 
-	function roomController() {
+    roomList.rooms = function () {
+        return roomService.getRooms()
+    };
 
-	}
-})();
+    roomList.addRoom = function () {
+        roomList.rooms().push({ roomNumber: roomList.number, roomDescription: roomList.description, maxAmount: roomList.maxAmount });
+        $('#confirmAddRoom').modal('hide');
+        $('#confirmAddRoom').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        $location.path('/Room/');
+        console.log(roomList.rooms());
+    };
+});
+angular.module('ReservationStudio').service('roomService', function ($q, $http) {
+    var rooms = [];
+    function loadCompanies() {
+        $http.get("rooms.json").then(function success(response) {
+            rooms = response.data.rooms;
+            console.log(rooms);
+        });
+    }
+
+    loadCompanies();
+
+    function clearCompanies() {
+        rooms = [];
+    }
+    return {
+        getCompanies: function () { return rooms },
+        clearCompanies: clearCompanies
+    }
+})
