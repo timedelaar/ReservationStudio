@@ -37,9 +37,14 @@ var rootUrl = "/app/";
 			}
 		})
 		.when('/Room/', {
-			templateUrl: rootUrl + 'Room/Index.html',
+			templateUrl: rootUrl + 'Room/room.html',
 			controller: 'RoomController',
 			controllerAs: 'ctrl'
+		})
+		.when('/Room/RoomAdd', {
+		    templateUrl: rootUrl + 'Room/roomAdd.html',
+		    controller: 'RoomController',
+		    controllerAs: 'ctrl'
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -50,25 +55,39 @@ angular.module('ReservationStudio').controller('companyController', function ($l
     var companyList = this;
 
     companyList.companies = function () {
-        return companyService.getCompanies()
+        return companyService.getCompanies();
     };
-
+    
     companyList.addCompany = function () {
-        companyList.companies().push({ name: companyList.name, employees: companyList.employees, location: companyList.location });
+        var company = {
+            name: companyList.name,
+            employees: companyList.employees,
+            location: companyList.location
+        };
+        companyService.addCompany(company);
+
         $('#confirmAddCompany').modal('hide');
         $('#confirmAddCompany').removeClass('modal-open');
         $('.modal-backdrop').remove();
         $location.path('/Company/');
-        console.log(companyList.companies());
     };
+
+        //companyList.companies().push({ name: companyList.name, employees: companyList.employees, location: companyList.location });
 });
 angular.module('ReservationStudio').service('companyService', function ($q, $http) {
     var companies = [];
     function loadCompanies() {
-        $http.get("companies.json").then(function success(response) {
-            companies = response.data.companies;
-            console.log(companies);
+        $http.get(appSettings.reservationServer + "Company").then(function success(response) {
+            companies = response.data;
         });
+    }
+
+    function addCompany(company) {
+        $http({
+            method: "POST",
+            url: appSettings.reservationServer + "Company",
+            data: company
+        })
     }
 
     loadCompanies();
@@ -78,7 +97,8 @@ angular.module('ReservationStudio').service('companyService', function ($q, $htt
     }
     return {
         getCompanies: function () { return companies },
-        clearCompanies: clearCompanies
+        clearCompanies: clearCompanies,
+        addCompany: addCompany
     }
 })
 angular.module('ReservationStudio').directive("ngCompanyDetails", function () {
@@ -89,6 +109,24 @@ angular.module('ReservationStudio').directive("ngCompanyDetails", function () {
         }
     }
 });
+(function () {
+	angular.module('ReservationStudio').service('AgendaService', ['$http', AgendaService]);
+
+	function AgendaService($http) {
+		return {
+			get: get
+		};
+
+		function get() {
+			return $http({
+				method: 'GET',
+				url: appSettings.reservationServer + 'Agenda'
+			}).then(function success(response) {
+				return response.data;
+			});
+		}
+	}
+})();
 (function () {
 	'use strict';
 	angular.module('ReservationStudio').controller('HomeController', [HomeController]);
@@ -123,10 +161,46 @@ angular.module('ReservationStudio').directive("ngCompanyDetails", function () {
 		};
 	}
 })();
-(function () {
-	angular.module('ReservationStudio').controller('RoomController', [roomController]);
+angular.module('ReservationStudio').directive("ngRoomDetails", function () {
+    return {
+        templateUrl: rootUrl + "Room/roomDetails.html",
+        scope: {
+            company: "="
+        }
+    }
+});
+angular.module('ReservationStudio').controller('roomController', function ($location, roomService) {
+    var roomList = this;
 
-	function roomController() {
+    roomList.rooms = function () {
+        return roomService.getRooms()
+    };
 
-	}
-})();
+    roomList.addRoom = function () {
+        roomList.rooms().push({ roomNumber: roomList.number, roomDescription: roomList.description, maxAmount: roomList.maxAmount });
+        $('#confirmAddRoom').modal('hide');
+        $('#confirmAddRoom').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        $location.path('/Room/');
+        console.log(roomList.rooms());
+    };
+});
+angular.module('ReservationStudio').service('roomService', function ($q, $http) {
+    var rooms = [];
+    function loadCompanies() {
+        $http.get("rooms.json").then(function success(response) {
+            rooms = response.data.rooms;
+            console.log(rooms);
+        });
+    }
+
+    loadCompanies();
+
+    function clearCompanies() {
+        rooms = [];
+    }
+    return {
+        getCompanies: function () { return rooms },
+        clearCompanies: clearCompanies
+    }
+})

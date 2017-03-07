@@ -1,0 +1,38 @@
+﻿<form class="form-horizontal" name="addRoomForm" ng-submit="roomList.addRoom()">
+    <div class="form-group">
+        <label for="roomNumber">Room Number:</label>
+        <input type="number" name="roomNumber" class="form-control" ng-model="roomList.roomNumber" placeholder="Number" required />
+    </div>
+    <div class="form-group">
+        <label for="roomDescription">Room Description:</label>
+        <input type="text" name="roomDescription" class="form-control" ng-model="roomList.roomDescription" placeholder="Description" required />
+    </div>
+    <div class="form-group">
+        <label for="maxAmount">Max amount:</label>
+        <input type="number" name="maxAmount" class="form-control" ng-model="roomList.maxAmount" placeholder="Max Amount" />
+    </div>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#confirmAddRoom" ng-disabled="!addRoomForm.roomNumber.$valid || !addRoomForm.roomDescription.$valid || !addRoomForm.maxAmount.$valid">
+            Submit
+        </button>
+        <a href="#/Room/" class="btn btn-default">Cancel</a>
+    </div>
+
+    <div id="confirmAddRoom" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Add Room
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to add a room with number "{{roomList.roomNumber}}"?
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default" value="add">Submit</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,10 +1,17 @@
 ﻿angular.module('ReservationStudio').service('companyService', function ($q, $http) {
     var companies = [];
     function loadCompanies() {
-        $http.get("companies.json").then(function success(response) {
-            companies = response.data.companies;
-            console.log(companies);
+        $http.get(appSettings.reservationServer + "Company").then(function success(response) {
+            companies = response.data;
         });
+    }
+
+    function addCompany(company) {
+        $http({
+            method: "POST",
+            url: appSettings.reservationServer + "Company",
+            data: company
+        })
     }
 
     loadCompanies();
@@ -14,6 +21,7 @@
     }
     return {
         getCompanies: function () { return companies },
-        clearCompanies: clearCompanies
+        clearCompanies: clearCompanies,
+        addCompany: addCompany
     }
 })

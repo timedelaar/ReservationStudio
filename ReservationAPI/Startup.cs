@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SapientGuardian.MySql.Data.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
@@ -48,9 +47,9 @@ namespace ReservationAPI
 					Title = "Reservation API",
 					Version = "v1"
 				});
-				var BasePath = PlatformServices.Default.Application.ApplicationBasePath;
-				var XmlPath = Path.Combine(BasePath, "ReservationAPI.xml");
-				c.IncludeXmlComments(XmlPath);
+				//var BasePath = PlatformServices.Default.Application.ApplicationBasePath;
+				//var XmlPath = Path.Combine(BasePath, "ReservationAPI.xml");
+				//c.IncludeXmlComments(XmlPath);
 			});
 
 			services.AddMvc();

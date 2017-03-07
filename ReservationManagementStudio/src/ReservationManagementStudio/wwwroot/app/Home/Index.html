@@ -3,7 +3,16 @@
 		<tr>
 			<th>Rooms</th>
 			<th>Morning</th>
-			<th></th>
+			<th>Afternoon</th>
+			<th>Evening</th>
 		</tr>
 	</thead>
+	<tbody>
+		<tr ng-repeat="room in ctrl.rooms">
+			<td>{{room.name}}</td>
+			<td>{{room.morning}}</td>
+			<td>{{room.afternoon}}</td>
+			<td>{{room.evening}}</td>
+		</tr>
+	</tbody>
 </table>
