@@ -1,0 +1,24 @@
+﻿<div class="row">
+    <div class="col-xs-2">
+        <div>Name:</div>
+        <div>Employees:</div>
+        <div>Location:</div>
+    </div>
+
+    <div class="col-xs-2">
+        <div>{{company.name}}</div>
+        <div>{{company.employees}}</div>
+        <div>{{company.location}}</div>
+    </div>
+</div>
+
+<div ng-if ="company.name != null">
+    <br />
+
+    <div class="row">
+        <div class="btn-group pull-right" role="group">
+            <a href="#companyEdit" class="btn btn-default">Edit</a>
+            <a href="#companyDelete" class="btn btn-default">Delete</a>
+        </div>
+    </div>
+</div>
