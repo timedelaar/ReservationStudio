@@ -1,3 +1,6 @@
+#Ignore Visual Studio settings
+.vs/
+
 #Ignore thumbnails created by windows
 Thumbs.db
 
@@ -23,7 +26,7 @@ Thumbs.db
 [Dd]ebug*/
 *.lib
 *.sbr
-obj/
+obj/*
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
