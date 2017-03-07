@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewBag.Title - WebApplication1</title>
+	<title>@ViewBag.Title</title>
 	<environment names="Development">
 		<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 		<link rel="stylesheet" href="~/css/site.css" />
@@ -15,11 +15,11 @@
 			  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
 		<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 	</environment>
-	@RenderSection("Styles", false);
+	@RenderSection("Styles", false)
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="sr-only">Toggle navigation</span>
@@ -39,7 +39,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container body-content">
+	<div class="container-fluid body-content">
 		@RenderBody()
 		<hr />
 		<footer>
@@ -52,6 +52,7 @@
 		<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 		<script src="~/lib/angular/angular.js"></script>
 		<script src="~/lib/angular-route/angular-route.js"></script>
+		<script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 		<script src="~/js/site.js" asp-append-version="true"></script>
 		@RenderSection("ScriptsDev", required: false)
 	</environment>
@@ -80,6 +81,7 @@
 					return true;
 				})">
 		</script>
+		<script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 		<script src="~/js/site.min.js" asp-append-version="true"></script>
 		@RenderSection("Scripts", required: false)
 	</environment>

@@ -25,14 +25,14 @@ namespace ReservationAPI.Controllers
         public IEnumerable<AgendaViewModel> Get()
         {
 			var query = from room in _DataContext.Rooms
-						join reservation in _DataContext.Reservations on room.Id equals reservation.RoomId
+						join reservation in _DataContext.Reservations on room.Id equals reservation.Id
 						select new
 						{
 							ReservationId = reservation.Id,
 							RoomId = room.Id
 						};
 
-
+			return null;
         }
 
         // GET api/values/5
