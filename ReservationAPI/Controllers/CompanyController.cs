@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Models;
-
+using Microsoft.AspNetCore.Http;
 
 namespace ReservationAPI.Controllers
 {
@@ -26,7 +26,8 @@ namespace ReservationAPI.Controllers
 		[HttpGet]
         public IEnumerable<Company> Get()
         {
-            return new List<Company>();
+            var list = _DataContext.Companies.ToList<Company>();
+            return list;
         }
 
 		/// <summary>
@@ -47,8 +48,24 @@ namespace ReservationAPI.Controllers
 		/// <param name="company">The company to create</param>
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]Company company)
+        public IActionResult Post([FromBody]Company company)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            _DataContext.Companies.Add(company);
+            try
+            {
+                _DataContext.SaveChanges();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status409Conflict);
+            }
+
+            return CreatedAtAction(
+                nameof(CompanyController.Get),
+                new { id = company.Id }, company
+                );
         }
 
 		/// <summary>
