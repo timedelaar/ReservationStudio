@@ -46,7 +46,7 @@ var rootUrl = "/app/";
 		});
 	}
 })();
-angular.module('ReservationStudio').controller('companyController', function ($location, companyService) {
+angular.module('ReservationStudio').controller('companyController', function (companyService) {
     var companyList = this;
 
     companyList.companies = function () {
@@ -62,14 +62,9 @@ angular.module('ReservationStudio').controller('companyController', function ($l
         companyService.addCompany(company);
 
         $('#confirmAddCompany').modal('hide');
-        $('#confirmAddCompany').removeClass('modal-open');
-        $('.modal-backdrop').remove();
-        $location.path('/Company/');
     };
-
-        //companyList.companies().push({ name: companyList.name, employees: companyList.employees, location: companyList.location });
 });
-angular.module('ReservationStudio').service('companyService', function ($q, $http) {
+angular.module('ReservationStudio').service('companyService', function ($q, $http, $location) {
     var companies = [];
     function loadCompanies() {
         $http.get(appSettings.reservationServer + "Company").then(function success(response) {
@@ -83,6 +78,10 @@ angular.module('ReservationStudio').service('companyService', function ($q, $htt
             url: appSettings.reservationServer + "Company",
             data: company
         })
+        .then(function (response) {
+            $location.path('/Company/');
+            loadCompanies();
+        });
     }
 
     loadCompanies();
