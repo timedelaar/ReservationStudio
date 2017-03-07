@@ -14,10 +14,10 @@ namespace ReservationAPI
 
 		}
 
-		DbSet<Company> Companies { get; set; }
+		public DbSet<Company> Companies { get; set; }
 
-		DbSet<Reservation> Reservations { get; set; }
+		public DbSet<Reservation> Reservations { get; set; }
 
-		DbSet<Room> Rooms { get; set; }
+		public DbSet<Room> Rooms { get; set; }
     }
 }

@@ -47,9 +47,9 @@ namespace ReservationAPI
 					Title = "Reservation API",
 					Version = "v1"
 				});
-				var BasePath = PlatformServices.Default.Application.ApplicationBasePath;
-				var XmlPath = Path.Combine(BasePath, "ReservationAPI.xml");
-				c.IncludeXmlComments(XmlPath);
+				//var BasePath = PlatformServices.Default.Application.ApplicationBasePath;
+				//var XmlPath = Path.Combine(BasePath, "ReservationAPI.xml");
+				//c.IncludeXmlComments(XmlPath);
 			});
 
 			services.AddMvc();
