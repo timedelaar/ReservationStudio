@@ -1,4 +1,5 @@
 ﻿/// <autosync enabled="true" />
+/// <reference path="app/company/companycontroller.js" />
 /// <reference path="app/company/companydirective.js" />
 /// <reference path="app/home/homecontroller.js" />
 /// <reference path="app/reservation/reservationcontroller.js" />
