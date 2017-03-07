@@ -1,4 +1,4 @@
-﻿angular.module('ReservationStudio').service('companyService', function ($q, $http) {
+﻿angular.module('ReservationStudio').service('companyService', function ($q, $http, $location) {
     var companies = [];
     function loadCompanies() {
         $http.get(appSettings.reservationServer + "Company").then(function success(response) {
@@ -12,6 +12,10 @@
             url: appSettings.reservationServer + "Company",
             data: company
         })
+        .then(function (response) {
+            $location.path('/Company/');
+            loadCompanies();
+        });
     }
 
     loadCompanies();

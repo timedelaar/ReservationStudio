@@ -67,6 +67,8 @@ namespace ReservationAPI
 			app.UseCors(builder =>
 			{
 				builder.AllowAnyOrigin();
+                builder.AllowAnyHeader();
+                builder.AllowAnyMethod();
 			});
 
 			app.UseSwagger();
