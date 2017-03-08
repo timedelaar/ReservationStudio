@@ -154,7 +154,6 @@ angular.module('ReservationStudio').service('companyService', function ($q, $htt
     }
 
     function changeCompany(company) {
-        debugger;
         $http({
             method: "PUT",
             url: appSettings.reservationServer + "Company/" + company.id,
