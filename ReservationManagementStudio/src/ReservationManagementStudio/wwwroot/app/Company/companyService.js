@@ -38,6 +38,7 @@
     return {
         getCompanies: function () { return companies; },
         clearCompanies: clearCompanies,
-        addCompany: addCompany
+        addCompany: addCompany,
+        deleteCompany: deleteCompany
     };
 });
