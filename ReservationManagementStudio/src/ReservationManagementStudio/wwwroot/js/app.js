@@ -406,6 +406,17 @@ angular.module('ReservationStudio')
             });
         }
 
+        function deleteReservation(id) {
+            $http({
+                method: "DELETE",
+                url: appSettings.reservationServer + "Reservation",
+                data: id
+            })
+            .then(function (response) {
+                loadReservations();
+            });
+        };
+
         loadReservations();
 
         function clearReservations() {
@@ -421,41 +432,99 @@ angular.module('ReservationStudio').directive("ngRoomDetails", function () {
     return {
         templateUrl: rootUrl + "Room/roomDetails.html",
         scope: {
-            company: "="
+            room: "="
         }
     }
 });
-angular.module('ReservationStudio').controller('RoomController', function ($location, roomService) {
+angular.module('ReservationStudio').controller('RoomController', function (roomService) {
     var roomList = this;
 
-    roomList.rooms = function () {
+    roomList.companies = function () {
         return roomService.getRooms();
     };
-
+    
     roomList.addRoom = function () {
-        roomList.rooms().push({ roomNumber: roomList.number, roomDescription: roomList.description, maxAmount: roomList.maxAmount });
+        var room = {
+            roomNumber: roomList.roomNumber,
+            roomDescription: roomList.roomDescription,
+            maxAmount: roomList.maxAmount
+        };
+        roomService.addRoom(room);
+
         $('#confirmAddRoom').modal('hide');
-        $('#confirmAddRoom').removeClass('modal-open');
-        $('.modal-backdrop').remove();
-        $location.path('/Room/');
     };
+
+    roomList.changeRoom = function () {
+        var room = {
+            id: roomList.room,
+            roomNumber: roomList.roomNumber,
+            roomDescription: roomList.roomDescription,
+            maxAmount: roomList.maxAmount
+        };
+        roomService.changeRoom(room.id);
+    }
+
+    roomList.deleteRoom = function () {
+        var room = {
+            id: roomList.room,
+            roomNumber: roomList.roomNumber,
+            roomDescription: roomList.roomDescription,
+            maxAmount: roomList.maxAmount
+        };
+        roomService.deleteRoom(room.id);
+    }
 });
-angular.module('ReservationStudio').service('roomService', function ($q, $http) {
+
+angular.module('ReservationStudio').service('roomService', function ($q, $http, $location) {
     var rooms = [];
     function loadRooms() {
-        $http.get("rooms.json").then(function success(response) {
-            rooms = response.data.rooms;
-            console.log(rooms);
+        $http.get(appSettings.reservationServer + "Room").then(function success(response) {
+            rooms = response.data;
+        });
+    }
+    loadRooms();
+
+    function addRoom(room) {
+        $http({
+            method: "POST",
+            url: appSettings.reservationServer + "Room",
+            data: room
+        })
+        .then(function (response) {
+            $location.path('/Room/');
+            loadRooms();
         });
     }
 
-    loadRooms();
+    function changeRoom(room) {
+        $http({
+            method: "PUT",
+            url: appSettings.reservationServer + "Room",
+            data: room
+        })
+        .then(function (response) {
+            $location.path('/Room/');
+            loadRooms();
+        });
+    }
+
+    function deleteRoom(id) {
+        $http({
+            method: "DELETE",
+            url: appSettings.reservationServer + "Room",
+            data: id
+        })
+        .then(function (response) {
+            loadRooms();
+        });
+    };
 
     function clearRooms() {
         rooms = [];
     }
     return {
         getRooms: function () { return rooms },
-        clearRooms: clearRooms
+        clearRooms: clearRooms,
+        addRoom: addRoom
     }
 })
