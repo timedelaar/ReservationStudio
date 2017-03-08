@@ -68,6 +68,16 @@ angular.module('ReservationStudio').controller('companyController', function (co
 
         $('#confirmAddCompany').modal('hide');
     };
+
+    companyList.deleteCompany = function () {
+        var company = {
+            id: companyList.company,
+            name: companyList.name,
+            employees: companyList.employees,
+            location: companyList.location
+        };
+        companyService.deleteCompany(company.id);
+    }
 });
 angular.module('ReservationStudio').service('companyService', function ($q, $http, $location) {
     var companies = [];
@@ -88,6 +98,17 @@ angular.module('ReservationStudio').service('companyService', function ($q, $htt
             loadCompanies();
         });
     }
+
+    function deleteCompany(id) {
+        $http({
+            method: "DELETE",
+            url: appSettings.reservationServer + "Company",
+            data: id
+        })
+        .then(function (response) {
+            loadCompanies();
+        });
+    };
 
     loadCompanies();
 
