@@ -1,6 +1,5 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="app/company/companycontroller.js" />
-/// <reference path="app/company/companyeditcontroller.js" />
 /// <reference path="app/company/companyservice.js" />
 /// <reference path="app/company/ngcompanydetails.js" />
 /// <reference path="app/home/agendaservice.js" />
