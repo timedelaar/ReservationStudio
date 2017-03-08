@@ -27,9 +27,15 @@ var rootUrl = "/app/";
             controllerAs: "companyList"
         })
         .when("/Company/CompanyEdit", {
-            templateUrl: rootUrl + "Company/companyAdd.html",
+            templateUrl: rootUrl + "Company/companyAdd.html/:id",
             controller: "companyController",
-            controllerAs: "companyList"
+            controllerAs: "companyList",
+            resolve: {
+                company: ["companyService", "$route", function ($company, $route) {
+                    var id = parseInt($route.current.params.id);
+                    return $company.get(id);
+                }]
+            }
         })
 		.when('/Reservation/', {
 			templateUrl: rootUrl + 'Reservation/reservations.html',
@@ -80,8 +86,6 @@ angular.module('ReservationStudio').controller('companyController', function (co
 
         $('#confirmDeleteCompany').modal('hide');
     };
-
-
 });
 angular.module('ReservationStudio').service('companyService', function ($q, $http, $location) {
     var companies = [];
@@ -109,6 +113,28 @@ angular.module('ReservationStudio').service('companyService', function ($q, $htt
             url: appSettings.reservationServer + "Company/" + company.id
         })
         .then(function (response) {
+            loadCompanies();
+        });
+    }
+
+    function get(id) {
+        $http({
+            method: "GET",
+            url: appSettings.reservationServer + "Company/" + id
+        })
+            .then(function success(response) {
+                return response.data;
+            });
+    }
+
+    function changeCompany(company) {
+        $http({
+            method: "PUT",
+            url: appSettings.reservationServer + "Company/" + company.id,
+            data: { company: company }
+        })
+        .then(function (response) {
+            $location.path('/Company/');
             loadCompanies();
         });
     }

@@ -28,6 +28,28 @@
         });
     }
 
+    function get(id) {
+        $http({
+            method: "GET",
+            url: appSettings.reservationServer + "Company/" + id
+        })
+            .then(function success(response) {
+                return response.data;
+            });
+    }
+
+    function changeCompany(company) {
+        $http({
+            method: "PUT",
+            url: appSettings.reservationServer + "Company/" + company.id,
+            data: { company: company }
+        })
+        .then(function (response) {
+            $location.path('/Company/');
+            loadCompanies();
+        });
+    }
+
     loadCompanies();
 
     function clearCompanies() {
