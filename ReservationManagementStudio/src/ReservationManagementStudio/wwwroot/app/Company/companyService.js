@@ -18,6 +18,17 @@
         });
     }
 
+    function deleteCompany(id) {
+        $http({
+            method: "DELETE",
+            url: appSettings.reservationServer + "Company",
+            data: id
+        })
+        .then(function (response) {
+            loadCompanies();
+        });
+    };
+
     loadCompanies();
 
     function clearCompanies() {
