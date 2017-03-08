@@ -19,11 +19,9 @@
     }
 
     function deleteCompany(company) {
-        debugger;
         $http({
             method: "DELETE",
-            url: appSettings.reservationServer + "Company",
-            data: company
+            url: appSettings.reservationServer + "Company/" + company.id
         })
         .then(function (response) {
             loadCompanies();

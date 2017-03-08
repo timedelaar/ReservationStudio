@@ -75,7 +75,6 @@ angular.module('ReservationStudio').controller('companyController', function (co
     };
 
     companyList.deleteCompany = function (company) {
-        debugger;
         var selectedCompany = company;
         companyService.deleteCompany(selectedCompany);
 
@@ -105,11 +104,9 @@ angular.module('ReservationStudio').service('companyService', function ($q, $htt
     }
 
     function deleteCompany(company) {
-        debugger;
         $http({
             method: "DELETE",
-            url: appSettings.reservationServer + "Company",
-            data: company
+            url: appSettings.reservationServer + "Company/" + company.id
         })
         .then(function (response) {
             loadCompanies();

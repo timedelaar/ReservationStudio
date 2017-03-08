@@ -100,6 +100,16 @@ namespace ReservationAPI.Controllers
             if (company == null)
                 return NotFound();
             _DataContext.Companies.Remove(company);
+
+            try
+            {
+                _DataContext.SaveChanges();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status304NotModified);
+            }
+
             return Ok(company);
         }
     }

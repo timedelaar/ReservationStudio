@@ -17,7 +17,6 @@
     };
 
     companyList.deleteCompany = function (company) {
-        debugger;
         var selectedCompany = company;
         companyService.deleteCompany(selectedCompany);
 
