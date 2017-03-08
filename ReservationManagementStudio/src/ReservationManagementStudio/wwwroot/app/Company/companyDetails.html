@@ -17,8 +17,25 @@
 
     <div class="row">
         <div class="btn-group pull-right" role="group">
-            <a href="#companyEdit" class="btn btn-default">Edit</a>
-            <a href="#companyDelete" class="btn btn-default" ng-click="companyList.deleteCompany()">Delete</a>
+            <a href="#/Company/CompanyEdit" class="btn btn-default">Edit</a>
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#confirmDeleteCompany">Delete</button>
+        </div>
+    </div>
+</div>
+
+<div id="confirmDeleteCompany" class="modal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Delete Company
+            </div>
+            <div class="modal-body">
+                Are you sure you want to Delete "{{company.name}}"?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-controller="companyController as companyList" ng-click="companyList.deleteCompany(company)">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
         </div>
     </div>
 </div>

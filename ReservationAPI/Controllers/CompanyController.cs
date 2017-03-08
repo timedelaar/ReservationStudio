@@ -75,8 +75,17 @@ namespace ReservationAPI.Controllers
 		/// <param name="company">A company object containing the new information</param>
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Company company)
+        public IActionResult Put(int id, [FromBody]Company company)
         {
+            if (id != company.Id)
+                return BadRequest();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            if (_DataContext.Companies.Find(id) == null)
+                return NotFound();
+            _DataContext.Entry(company).State =
+                Microsoft.EntityFrameworkCore.EntityState.Modified;
+            return NoContent();
         }
 
 		/// <summary>

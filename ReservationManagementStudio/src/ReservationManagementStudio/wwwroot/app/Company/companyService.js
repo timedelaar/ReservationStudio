@@ -18,16 +18,17 @@
         });
     }
 
-    function deleteCompany(id) {
+    function deleteCompany(company) {
+        debugger;
         $http({
             method: "DELETE",
             url: appSettings.reservationServer + "Company",
-            data: id
+            data: company
         })
         .then(function (response) {
             loadCompanies();
         });
-    };
+    }
 
     loadCompanies();
 
@@ -35,8 +36,8 @@
         companies = [];
     }
     return {
-        getCompanies: function () { return companies },
+        getCompanies: function () { return companies; },
         clearCompanies: clearCompanies,
         addCompany: addCompany
-    }
-})
+    };
+});
