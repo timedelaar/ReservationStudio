@@ -1,0 +1,87 @@
+﻿<div class="container" ng-controller="reservationController">
+    <div class="row">
+        <h1 class="page-header">Reservations</h1>
+    </div>
+    <div class="row">
+        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#resModal">
+            Add Reservation
+        </button>
+
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Reservation Nr</th>
+                        <th>Company</th>
+                        <th>Room</th>
+                        <th>DayPart</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="reservation in reservations">
+                        <td>{{reservation.Id}}</td>
+                        <td>{{reservation.Company}}</td>
+                        <td>{{reservation.Room}}</td>
+                        <td>{{reservation.DayPart}}</td>
+                        <td>{{reservation.Status}}</td>
+                        <td>
+                            <a href="javascript:void(0)" ng-click="updateReservation(reservation.Id)">edit</a> | <a href="javascript:void(0)" ng-click="deleteReservation(reservation.Id)">delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="resModal" tabindex="-1" role="dialog" aria-labelledby="resModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content col-md-12 col-sm-12 col-xs-12">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="resModalLabel">New Reservation</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form name="formReservation" role="form" ng-submit="addReservation()">
+                            <div class="form-group">
+                                <label for="selCompany" class="col-sm-2 control-label">Company</label>
+                                <select class="form-control" id="selCompany" ng-model="newReservation.company">
+                                    <option value=""></option>
+                                    <option ng-repeat="company in Companies" value="company.Id">
+                                        {{company.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="selRoom" class="col-sm-2 control-label">Room</label>
+                                <select class="form-control" id="selRoom" ng-model="newReservation.room">
+                                    <option value=""></option>
+                                    <option ng-repeat="room in Rooms" value="room.Id">
+                                        {{room.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="selDayPart" class="col-sm-2 control-label">DayPart</label>
+                                <select class="form-control" id="selCompany" ng-model="newReservation.dayPart">
+                                    <option value=""></option>
+                                    <option value="Morning">Morning (8:00 - 12:00)</option>
+                                    <option value="Afternoon">Afternoon (13:00 - 18:00)</option>
+                                    <option value="Evening">Evening (19:00 - 00:00)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Status</label>
+                                <input type="radio" ng-model="newReservation.status" value="Confirmed">Confirmed                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" ng-disabled="formReservation.valid">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
