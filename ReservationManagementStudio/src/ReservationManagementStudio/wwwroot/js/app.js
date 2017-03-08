@@ -91,12 +91,26 @@ angular.module('ReservationStudio').controller('companyController', function (co
     angular.module("ReservationStudio").controller("companyEditController", ["companyService", "company", function (companyService, company) {
         var controller = this;
 
-        controller.id = id;
+        controller.id = company.id;
         controller.name = company.name;
         controller.employees = company.employees;
         controller.location = company.location;
+
+        controller.addCompany = addCompany;
+
+        function addCompany () {
+            var company = {
+                id: controller.id,
+                name: controller.name,
+                employees: controller.employees,
+                location: controller.location
+            };
+            companyService.changeCompany(company);
+
+            $('#confirmAddCompany').modal('hide');
+        };
     }]);
-})
+})();
 angular.module('ReservationStudio').service('companyService', function ($q, $http, $location) {
     var companies = [];
     function loadCompanies() {
@@ -140,10 +154,11 @@ angular.module('ReservationStudio').service('companyService', function ($q, $htt
     }
 
     function changeCompany(company) {
+        debugger;
         $http({
             method: "PUT",
             url: appSettings.reservationServer + "Company/" + company.id,
-            data: { company: company }
+            data: company
         })
         .then(function (response) {
             $location.path('/Company/');
