@@ -14,7 +14,6 @@
 /// <reference path="app/room/roomcontroller.js" />
 /// <reference path="app/room/roomservice.js" />
 /// <reference path="app/routeconfig.js" />
-/// <reference path="js/app.min.js" />
 /// <reference path="js/site.js" />
 /// <reference path="lib/angular/angular.js" />
 /// <reference path="lib/angular-bootstrap/ui-bootstrap-tpls.js" />
