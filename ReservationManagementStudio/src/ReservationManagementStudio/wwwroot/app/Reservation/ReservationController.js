@@ -4,7 +4,9 @@
 
 
             $scope.reservations;
-            $scope.companies = companyService.getCompanies();
+            companyService.getList().then(function (companies) {
+            	$scope.companies = companies;
+            });
             roomService.getList().then(function (rooms) {
             	$scope.rooms = rooms;
             });
