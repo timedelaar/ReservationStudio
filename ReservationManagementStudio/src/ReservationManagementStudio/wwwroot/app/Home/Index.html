@@ -1,42 +1,40 @@
-﻿<div class="container">
-    <div class="row">
-        <div class="col-sm-2">
-            <p class="input-group">
-                <input type="text" class="form-control" uib-datepicker-popup="d!-M!-yyyy" ng-model="ctrl.date" is-open="ctrl.pickerOpen" ng-required="true" close-text="Close" ng-change="ctrl.updateAgenda()" />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="ctrl.openDatepicker()"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-            </p>
-        </div>
-        <div class="col-sm-2">
-            <div class="form-group has-feedback">
-                <input type="text" class="form-control" ng-model="ctrl.searchRoomNumber" />
-                <span class="glyphicon glyphicon-search form-control-feedback"></span>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <table class="table table-bordered agenda">
-                <thead>
-                    <tr>
-                        <th class="text-center">Rooms</th>
-                        <th class="text-center" ng-repeat="date in ctrl.dates">{{date.toLocaleDateString()}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="reservation in ctrl.reservations | filter: ctrl.filterRooms">
-                        <td class="text-center" style="width: 40px">{{reservation.room.roomNumber}}</td>
-                        <td ng-repeat="date in ctrl.dates" style="width: calc((100% - 40px) / {{ctrl.visibleDays + 1}})" class="row">
-                            <span ng-repeat="reservation in ctrl.getReservation(reservation.reservations, date) | orderBy: 'time' as ordered_result track by $index" class="col-sm-4">
-                                <span class="agenda-reservation" ng-class="{ 'free': !reservation.company, 'reserved': reservation.company}" ng-click="ctrl.viewReservation(reservation, $index)">
-                                    {{reservation.company.name}}
-                                </span>
-                            </span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+﻿<div class="row">
+	<div class="col-sm-2">
+		<p class="input-group">
+			<input type="text" class="form-control" uib-datepicker-popup="d!-M!-yyyy" ng-model="ctrl.date" is-open="ctrl.pickerOpen" ng-required="true" close-text="Close" ng-change="ctrl.updateAgenda()" />
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-default" ng-click="ctrl.openDatepicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+			</span>
+		</p>
+	</div>
+	<div class="col-sm-2">
+		<div class="form-group has-feedback">
+			<input type="text" class="form-control" ng-model="ctrl.searchRoomNumber" />
+			<span class="glyphicon glyphicon-search form-control-feedback"></span>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<table class="table table-bordered agenda">
+			<thead>
+				<tr>
+					<th class="text-center">Rooms</th>
+					<th class="text-center" ng-repeat="date in ctrl.dates">{{date.toLocaleDateString()}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="reservation in ctrl.reservations | filter: ctrl.filterRooms">
+					<td class="text-center" style="width: 40px">{{reservation.room.roomNumber}}</td>
+					<td ng-repeat="date in ctrl.dates" style="width: calc((100% - 40px) / {{ctrl.visibleDays + 1}})" class="row">
+						<span ng-repeat="reservation in ctrl.getReservation(reservation.reservations, date) | orderBy: 'time' as ordered_result track by $index" class="col-md-4">
+							<span class="agenda-reservation" ng-class="{ 'free': !reservation.company, 'reserved': reservation.company}" ng-click="ctrl.viewReservation(reservation, $index)">
+								{{reservation.company.name}}
+							</span>
+						</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </div>
