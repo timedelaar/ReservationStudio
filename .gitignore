@@ -1,3 +1,6 @@
+#Ignore build files
+app.*
+
 #Ignore Visual Studio settings
 .vs/
 
