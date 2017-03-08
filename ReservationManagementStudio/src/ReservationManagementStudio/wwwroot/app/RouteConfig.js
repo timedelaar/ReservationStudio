@@ -32,12 +32,12 @@
 		.when('/Room/', {
 			templateUrl: rootUrl + 'Room/room.html',
 			controller: 'RoomController',
-			controllerAs: 'ctrl'
+			controllerAs: 'roomList'
 		})
-		.when('/Room/RoomAdd', {
-		    templateUrl: rootUrl + 'Room/roomAdd.html',
-		    controller: 'RoomController',
-		    controllerAs: 'ctrl'
+		.when("/Room/RoomAdd", {
+		    templateUrl: rootUrl + "Room/roomAdd.html",
+		    controller: "RoomController",
+		    controllerAs: "roomList"
 		})
 		.otherwise({
 			redirectTo: '/'

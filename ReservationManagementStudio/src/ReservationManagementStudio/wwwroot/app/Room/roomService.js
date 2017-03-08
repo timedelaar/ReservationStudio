@@ -1,19 +1,19 @@
 ﻿angular.module('ReservationStudio').service('roomService', function ($q, $http) {
     var rooms = [];
-    function loadCompanies() {
+    function loadRooms() {
         $http.get("rooms.json").then(function success(response) {
             rooms = response.data.rooms;
             console.log(rooms);
         });
     }
 
-    loadCompanies();
+    loadRooms();
 
-    function clearCompanies() {
+    function clearRooms() {
         rooms = [];
     }
     return {
-        getCompanies: function () { return rooms },
-        clearCompanies: clearCompanies
+        getRooms: function () { return rooms },
+        clearRooms: clearRooms
     }
 })

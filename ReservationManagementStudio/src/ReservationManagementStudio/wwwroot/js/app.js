@@ -39,12 +39,12 @@ var rootUrl = "/app/";
 		.when('/Room/', {
 			templateUrl: rootUrl + 'Room/room.html',
 			controller: 'RoomController',
-			controllerAs: 'ctrl'
+			controllerAs: 'roomList'
 		})
-		.when('/Room/RoomAdd', {
-		    templateUrl: rootUrl + 'Room/roomAdd.html',
-		    controller: 'RoomController',
-		    controllerAs: 'ctrl'
+		.when("/Room/RoomAdd", {
+		    templateUrl: rootUrl + "Room/roomAdd.html",
+		    controller: "RoomController",
+		    controllerAs: "roomList"
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -297,7 +297,7 @@ angular.module('ReservationStudio').directive("ngRoomDetails", function () {
         }
     }
 });
-angular.module('ReservationStudio').controller('roomController', function ($location, roomService) {
+angular.module('ReservationStudio').controller('RoomController', function ($location, roomService) {
     var roomList = this;
 
     roomList.rooms = function () {
@@ -314,20 +314,20 @@ angular.module('ReservationStudio').controller('roomController', function ($loca
 });
 angular.module('ReservationStudio').service('roomService', function ($q, $http) {
     var rooms = [];
-    function loadCompanies() {
+    function loadRooms() {
         $http.get("rooms.json").then(function success(response) {
             rooms = response.data.rooms;
             console.log(rooms);
         });
     }
 
-    loadCompanies();
+    loadRooms();
 
-    function clearCompanies() {
+    function clearRooms() {
         rooms = [];
     }
     return {
-        getCompanies: function () { return rooms },
-        clearCompanies: clearCompanies
+        getRooms: function () { return rooms },
+        clearRooms: clearRooms
     }
 })

@@ -1,4 +1,4 @@
-﻿angular.module('ReservationStudio').controller('roomController', function ($location, roomService) {
+﻿angular.module('ReservationStudio').controller('RoomController', function ($location, roomService) {
     var roomList = this;
 
     roomList.rooms = function () {
