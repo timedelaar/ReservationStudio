@@ -30,10 +30,17 @@ namespace ReservationAPI.Controllers
         // Get a single reservation by Id
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
-        }
+			Reservation reservation = _DataContext.Reservations.Find(id);
+
+			if (reservation == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(reservation);
+		}
 
         // Create a new reservation
         // POST api/values

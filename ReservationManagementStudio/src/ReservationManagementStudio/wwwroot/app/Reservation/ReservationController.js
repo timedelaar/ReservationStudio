@@ -1,11 +1,13 @@
 ﻿angular.module('ReservationStudio')
     .controller('reservationController', ['$scope', '$window', 'reservationFactory', 'companyService', 'RoomService',
-        function ($scope, $window, reservationFactory, companyService, roomService) {
+        function ($scope, $window, ReservationFactory, companyService, roomService) {
 
 
             $scope.reservations;
             $scope.companies = companyService.getCompanies();
-            $scope.rooms = roomService.getRooms();
+            roomService.getList().then(function (rooms) {
+            	$scope.rooms = rooms;
+            });
 
             function getReservations() {
                 ReservationFactory.getReservations()
