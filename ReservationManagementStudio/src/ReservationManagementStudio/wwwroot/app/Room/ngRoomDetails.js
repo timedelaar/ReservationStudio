@@ -2,7 +2,12 @@
     return {
         templateUrl: rootUrl + "Room/roomDetails.html",
         scope: {
-            room: "="
+        	room: "="
+        },
+        require: "^ngController",
+        link: function (scope, element, attrs, ctrl) {
+        	scope.changeRoom = ctrl.changeRoom;
+        	scope.deleteRoom = ctrl.deleteRoom;
         }
     }
 });

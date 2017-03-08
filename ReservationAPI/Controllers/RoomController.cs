@@ -23,15 +23,22 @@ namespace ReservationAPI.Controllers
 		[HttpGet]
         public IEnumerable<Room> Get()
         {
-            var list = _DataContext.Rooms.ToList<Room>();
+            var list = _DataContext.Rooms.ToList();
             return list;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-             return "value";
+			Room room = _DataContext.Rooms.Find(id);
+
+			if (room == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(room);
         }
 
         // POST api/values
@@ -56,7 +63,7 @@ namespace ReservationAPI.Controllers
             return CreatedAtAction(
                 nameof(RoomController.Get),
                 new { id = room.Id }, room
-                );
+            );
         }
 
         // PUT api/values/5
@@ -79,7 +86,15 @@ namespace ReservationAPI.Controllers
             oldRoom.MaxAmount = room.MaxAmount;
 
             _DataContext.Rooms.Update(oldRoom);
-            return new NoContentResult();
+			try
+			{
+				_DataContext.SaveChanges();
+				return new NoContentResult();
+			}
+			catch
+			{
+				return StatusCode(StatusCodes.Status409Conflict);
+			}
         }
 
         // DELETE api/values/5
@@ -90,8 +105,16 @@ namespace ReservationAPI.Controllers
             Room room = _DataContext.Rooms.Find(id);
             if (room == null) { 
                 return NotFound();
-        }
+			}
             _DataContext.Rooms.Remove(room);
+			try
+			{
+				_DataContext.SaveChanges();
+			}
+			catch
+			{
+				return StatusCode(StatusCodes.Status410Gone);
+			}
             return Ok(room);
         }
     }

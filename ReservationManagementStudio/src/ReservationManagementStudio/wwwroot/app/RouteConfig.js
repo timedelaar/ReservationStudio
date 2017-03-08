@@ -50,6 +50,17 @@
 		    controller: "RoomController",
 		    controllerAs: "roomList"
 		})
+		.when("/Room/RoomEdit/:id", {
+			templateUrl: rootUrl + "Room/roomAdd.html",
+			controller: "RoomEditController",
+			controllerAs: "roomList",
+			resolve: {
+				room: ["RoomService", "$route", function ($rooms, $route) {
+					var id = parseInt($route.current.params.id);
+					return $rooms.get(id);
+				}]
+			}
+		})
 		.otherwise({
 			redirectTo: '/'
 		});

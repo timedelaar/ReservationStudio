@@ -33,11 +33,9 @@
             method: "GET",
             url: appSettings.reservationServer + "Company/" + id
         })
-            .then(function success(response) {
-                return response.data;
-            });
-
-
+        .then(function success(response) {
+            return response.data;
+        });
     }
 
     function changeCompany(company) {
