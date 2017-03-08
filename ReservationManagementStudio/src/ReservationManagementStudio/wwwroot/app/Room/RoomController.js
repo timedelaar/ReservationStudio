@@ -1,15 +1,38 @@
-﻿angular.module('ReservationStudio').controller('RoomController', function ($location, roomService) {
+﻿angular.module('ReservationStudio').controller('RoomController', function (roomService) {
     var roomList = this;
 
-    roomList.rooms = function () {
+    roomList.companies = function () {
         return roomService.getRooms();
     };
-
+    
     roomList.addRoom = function () {
-        roomList.rooms().push({ roomNumber: roomList.number, roomDescription: roomList.description, maxAmount: roomList.maxAmount });
+        var room = {
+            roomNumber: roomList.roomNumber,
+            roomDescription: roomList.roomDescription,
+            maxAmount: roomList.maxAmount
+        };
+        roomService.addRoom(room);
+
         $('#confirmAddRoom').modal('hide');
-        $('#confirmAddRoom').removeClass('modal-open');
-        $('.modal-backdrop').remove();
-        $location.path('/Room/');
     };
+
+    roomList.changeRoom = function () {
+        var room = {
+            id: roomList.room,
+            roomNumber: roomList.roomNumber,
+            roomDescription: roomList.roomDescription,
+            maxAmount: roomList.maxAmount
+        };
+        roomService.changeRoom(room.id);
+    }
+
+    roomList.deleteRoom = function () {
+        var room = {
+            id: roomList.room,
+            roomNumber: roomList.roomNumber,
+            roomDescription: roomList.roomDescription,
+            maxAmount: roomList.maxAmount
+        };
+        roomService.deleteRoom(room.id);
+    }
 });
