@@ -4,12 +4,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using ReservationAPI;
+using ReservationAPI.Models;
 
 namespace ReservationAPI.Migrations
 {
     [DbContext(typeof(ReservationAPIDataContext))]
-    [Migration("20170308130943_Room")]
-    partial class Room
+    [Migration("20170308221807_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,9 +40,13 @@ namespace ReservationAPI.Migrations
 
                     b.Property<int?>("CompanyId");
 
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("DayPart");
+
                     b.Property<int?>("RoomId");
 
-                    b.Property<string>("Status");
+                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 

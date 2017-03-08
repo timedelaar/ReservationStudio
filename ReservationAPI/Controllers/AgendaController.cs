@@ -20,44 +20,21 @@ namespace ReservationAPI.Controllers
 			_DataContext = DataContext;
 		}
 
-        // GET: api/values
+        // GET: api/Agenda/
         [HttpGet]
         public IEnumerable<AgendaViewModel> Get()
         {
 			var query = from room in _DataContext.Rooms
-						join reservation in _DataContext.Reservations on room.Id equals reservation.Id
-						select new
+						join reservation in _DataContext.Reservations on room.Id equals reservation.Room.Id into reservations
+						select new AgendaViewModel
 						{
-							ReservationId = reservation.Id,
-							RoomId = room.Id
+							Room = room,
+							Reservations = reservations
 						};
 
-			return null;
-        }
+			var result = query.ToList();
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+			return result;
         }
     }
 }
