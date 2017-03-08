@@ -32,7 +32,7 @@
         $http({
             method: "PUT",
             url: appSettings.reservationServer + "Room/" + room.id,
-            data: { room: room }
+            data: room
         })
         .then(function (response) {
             $location.path('/Room/');

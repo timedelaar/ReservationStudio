@@ -10,7 +10,15 @@
 		controller.addRoom = addRoom;
 
 		function addRoom() {
+			var room = {
+				id: controller.roomId,
+				roomNumber: controller.roomNumber,
+				roomDescription: controller.roomDescription,
+				maxAmount: controller.maxAmount
+			};
+			RoomService.changeRoom(room);
 
+			$('#confirmAddRoom').modal('hide');
 		}
 	}]);
 })();
