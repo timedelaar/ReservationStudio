@@ -85,8 +85,13 @@ namespace ReservationAPI.Controllers
 		/// <param name="id">The company id</param>
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            Company company = _DataContext.Companies.Find(id);
+            if (company == null)
+                return NotFound();
+            _DataContext.Companies.Remove(company);
+            return Ok(company);
         }
     }
 }
