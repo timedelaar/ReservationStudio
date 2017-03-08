@@ -42,7 +42,7 @@
         $http({
             method: "PUT",
             url: appSettings.reservationServer + "Company/" + company.id,
-            data: { company: company }
+            data: company
         })
         .then(function (response) {
             $location.path('/Company/');

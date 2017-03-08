@@ -86,9 +86,30 @@ namespace ReservationAPI.Controllers
         {
             if (company == null || company.Id != id)
             {
+                return BadRequest();
+            }
+
+            var oldCompany = _DataContext.Companies.Find(id);
+            if (oldCompany == null)
+            {
                 return NotFound();
             }
-            return NotFound();
+
+            oldCompany.Id = company.Id;
+            oldCompany.Name = company.Name;
+            oldCompany.Employees = company.Employees;
+            oldCompany.Location = company.Location;
+
+            _DataContext.Companies.Update(oldCompany);
+            try
+            {
+                _DataContext.SaveChanges();
+                return new NoContentResult();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status409Conflict);
+            }
         }
 
 		/// <summary>
