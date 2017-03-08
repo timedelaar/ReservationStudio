@@ -21,6 +21,17 @@
             });
         }
 
+        function deleteReservation(id) {
+            $http({
+                method: "DELETE",
+                url: appSettings.reservationServer + "Reservation",
+                data: id
+            })
+            .then(function (response) {
+                loadReservations();
+            });
+        };
+
         loadReservations();
 
         function clearReservations() {

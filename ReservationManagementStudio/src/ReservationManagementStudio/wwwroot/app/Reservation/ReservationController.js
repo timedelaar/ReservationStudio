@@ -30,7 +30,7 @@
 
             //    ReservationFactory.updateReservation(res)
             //     .then(function (response) {
-            //         $scope.status = 'Updated Reservation! Refreshing reservation list.';
+            //         $window.alert('Updated Reservation! Refreshing reservation list.');
             //     }, function (error) {
             //         $window.alert('Unable to update reservation: ' + error.message);
             //     });
@@ -38,10 +38,12 @@
 
             $scope.addReservation = function () {
 
+                if($scope.newReservation.status !== 'Confirmed')
+
                 ReservationFactory.addReservation($scope.newReservation)
                     .then(function (response) {
-                        $scope.status = 'Inserted reservation! Refreshing reservation list.';
-                        $scope.reservations.push(reservation);
+                        $window.alert('Inserted reservation! Refreshing reservation list.');
+                        $scope.reservations.push(response.data);
                     }, function (error) {
                         $window.alert('Unable to insert reservation: ' + error.message);
                     });
