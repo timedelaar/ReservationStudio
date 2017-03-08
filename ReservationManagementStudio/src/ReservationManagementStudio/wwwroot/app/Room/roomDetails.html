@@ -17,8 +17,8 @@
 
     <div class="row">
         <div class="btn-group pull-right" role="group">
-            <a href="#roomEdit" class="btn btn-default" ng-click="roomList.changeRoom()">Edit</a>
-            <a href="#roomDelete" class="btn btn-default" ng-click="roomList.deleteRoom()">Delete</a>
+            <a class="btn btn-default" href="#/Room/RoomEdit/{{room.id}}">Edit</a>
+            <button class="btn btn-default" ng-click="deleteRoom()">Delete</button>
         </div>
     </div>
 </div>

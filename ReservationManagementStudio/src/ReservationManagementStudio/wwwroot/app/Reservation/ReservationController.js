@@ -1,6 +1,6 @@
 ﻿angular.module('ReservationStudio')
-    .controller('reservationController', ['$scope', '$window', 'reservationFactory', 'companyService', 'roomService',
-        function ($scope, $window, reservationFactory, companyService, rommService) {
+    .controller('reservationController', ['$scope', '$window', 'reservationFactory', 'companyService', 'RoomService',
+        function ($scope, $window, reservationFactory, companyService, roomService) {
 
 
             $scope.reservations;

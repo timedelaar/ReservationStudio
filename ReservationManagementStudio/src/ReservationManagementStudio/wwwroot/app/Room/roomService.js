@@ -1,4 +1,4 @@
-﻿angular.module('ReservationStudio').service('roomService', function ($q, $http, $location) {
+﻿angular.module('ReservationStudio').service('RoomService', function ($q, $http, $location) {
     var rooms = [];
     function loadRooms() {
         $http.get(appSettings.reservationServer + "Room").then(function success(response) {
@@ -6,6 +6,15 @@
         });
     }
     loadRooms();
+
+    function get(id) {
+    	return $http({
+    		method: "GET",
+    		url: appSettings.reservationServer + "Room/" + id
+    	}).then(function success(response) {
+    		return response.data;
+    	});
+    }
 
     function addRoom(room) {
         $http({
@@ -22,8 +31,8 @@
     function changeRoom(room) {
         $http({
             method: "PUT",
-            url: appSettings.reservationServer + "Room",
-            data: room
+            url: appSettings.reservationServer + "Room/" + room.id,
+            data: { room: room }
         })
         .then(function (response) {
             $location.path('/Room/');
@@ -34,8 +43,7 @@
     function deleteRoom(id) {
         $http({
             method: "DELETE",
-            url: appSettings.reservationServer + "Room",
-            data: id
+            url: appSettings.reservationServer + "Room/" + id
         })
         .then(function (response) {
             loadRooms();
@@ -45,9 +53,13 @@
     function clearRooms() {
         rooms = [];
     }
+
     return {
+		get: get,
         getRooms: function () { return rooms },
         clearRooms: clearRooms,
-        addRoom: addRoom
+        addRoom: addRoom,
+        changeRoom: changeRoom,
+		deleteRoom: deleteRoom
     }
 })

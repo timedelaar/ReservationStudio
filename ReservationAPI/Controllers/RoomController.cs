@@ -23,15 +23,22 @@ namespace ReservationAPI.Controllers
 		[HttpGet]
         public IEnumerable<Room> Get()
         {
-            var list = _DataContext.Rooms.ToList<Room>();
+            var list = _DataContext.Rooms.ToList();
             return list;
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-             return "value";
+			Room room = _DataContext.Rooms.Find(id);
+
+			if (room == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(room);
         }
 
         // POST api/values

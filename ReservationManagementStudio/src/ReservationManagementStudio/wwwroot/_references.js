@@ -8,6 +8,7 @@
 /// <reference path="app/reservation/reservationfactory.js" />
 /// <reference path="app/reservation/reservationservice.js" />
 /// <reference path="app/reservationstudio.js" />
+/// <reference path="app/room/editroomcontroller.js" />
 /// <reference path="app/room/ngroomdetails.js" />
 /// <reference path="app/room/roomcontroller.js" />
 /// <reference path="app/room/roomservice.js" />
