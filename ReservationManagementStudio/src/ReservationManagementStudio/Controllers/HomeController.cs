@@ -21,6 +21,7 @@ namespace ReservationManagementStudio.Controllers
         // GET: /Home/
         public IActionResult Index()
         {
+			ViewBag.Title = "Reservation Studio 2017";
 			ViewBag.AppSettings = _appSettings;
             return View();
         }

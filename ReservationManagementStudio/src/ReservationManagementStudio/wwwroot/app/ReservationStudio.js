@@ -3,5 +3,5 @@
 (function () {
 	'use strict';
 
-	angular.module('ReservationStudio', ['ngRoute']);
+	angular.module('ReservationStudio', ['ngRoute', 'ui.bootstrap']);
 })();

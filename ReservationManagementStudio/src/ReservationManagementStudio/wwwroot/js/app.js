@@ -3,7 +3,7 @@ var rootUrl = "/app/";
 (function () {
 	'use strict';
 
-	angular.module('ReservationStudio', ['ngRoute']);
+	angular.module('ReservationStudio', ['ngRoute', 'ui.bootstrap']);
 })();
 (function () {
 	'use strict';
@@ -130,28 +130,157 @@ angular.module('ReservationStudio').directive("ngCompanyDetails", function () {
     }
 });
 (function () {
-	angular.module('ReservationStudio').service('AgendaService', ['$http', AgendaService]);
+	angular.module('ReservationStudio').service('AgendaService', ['$http', '$q', AgendaService]);
 
-	function AgendaService($http) {
+	function AgendaService($http, $q) {
 		return {
 			get: get
 		};
 
-		function get() {
-			return $http({
-				method: 'GET',
-				url: appSettings.reservationServer + 'Agenda'
-			}).then(function success(response) {
-				return response.data;
-			});
+		function get(startDate, endDate) {
+			//return $http({
+			//	method: 'GET',
+			//	url: appSettings.reservationServer + 'Agenda'
+			//}).then(function success(response) {
+			//	return response.data;
+			//});
+			var reservations = [
+				{
+					room: {
+						id: 1,
+						roomNumber: '12'
+					},
+					reservations: [
+						{
+							id: 1,
+							date: new Date('2017-03-7'),
+							time: 0,
+							company: {
+								id: 12,
+								name: 'Google is de pizza voor jou en mij'
+							}
+						},
+						{
+							id: 2,
+							date: new Date('2017-03-7'),
+							time: 1,
+							company: {
+								id: 12,
+								name: 'Google'
+							}
+						},
+						{
+							id: 3,
+							date: new Date('2017-03-7'),
+							time: 2,
+							company: {
+								id: 12,
+								name: 'Google'
+							}
+						}
+					]
+				},
+				{
+					room: {
+						id: 2,
+						roomNumber: '24'
+					},
+					reservations: [
+						{
+							id: 4,
+							date: new Date('2017-03-7'),
+							time: 0,
+							company: {
+								id: 12,
+								name: 'Google'
+							}
+						},
+						{
+							id: 5,
+							date: new Date('2017-03-7'),
+							time: 2,
+							company: {
+								id: 12,
+								name: 'Google'
+							}
+						},
+					]
+				}
+			]
+
+			return $q.when(reservations);
 		}
 	}
 })();
 (function () {
 	'use strict';
-	angular.module('ReservationStudio').controller('HomeController', [HomeController]);
+	angular.module('ReservationStudio').controller('HomeController', ['AgendaService', '$filter', HomeController]);
 
-	function HomeController() {
+	function HomeController($agenda, $filter) {
+		var controller = this;
+
+		controller.date = new Date(Date.now());
+		controller.dates = [];
+		controller.pickerOpen = false;
+		controller.visibleDays = 7;
+		controller.reservations = [];
+		controller.searchRoomNumber = '';
+
+		controller.filterRooms = filterRooms;
+		controller.getReservation = getReservation;
+		controller.openDatepicker = openDatepicker;
+		controller.updateAgenda = updateAgenda;
+		controller.viewReservation = viewReservation;
+
+		init();
+
+		function init() {
+			updateAgenda();
+		}
+
+		function filterRooms(value, index, array) {
+			if (!controller.searchRoomNumber)
+				return true;
+
+			return value.room.roomNumber.indexOf(controller.searchRoomNumber) != -1;
+		}
+
+		function getDates() {
+			controller.dates = [];
+			for (var i = 0, numberOfDays = controller.visibleDays; i < numberOfDays; i++) {
+				var date = new Date(controller.date);
+				date.setDate(controller.date.getDate() + i);
+				controller.dates.push(date);
+			}
+		}
+
+		function getReservation(reservations, date) {
+			var filteredReservations = $filter('filter')(reservations, function (value, index, array) {
+				return date.toLocaleDateString() == value.date.toLocaleDateString();
+			});
+			if (filteredReservations.length < 3) {
+				for (var i = 0, num = 3 - filteredReservations.length; i < num; i++) {
+					filteredReservations.push('');
+				}
+			}
+			return filteredReservations;
+		}
+
+		function openDatepicker() {
+			controller.pickerOpen = !controller.pickerOpen;
+		}
+
+		function updateAgenda() {
+			getDates();
+			$agenda.get(controller.date, controller.dates[controller.dates.length - 1]).then(function (reservations) {
+				controller.reservations = reservations;
+			});
+		}
+
+		function viewReservation(reservation, time) {
+			console.log('reservation', reservation);
+			console.log('time:' + time);
+		}
 	}
 })();
 (function () {
