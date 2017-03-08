@@ -26,8 +26,8 @@ var rootUrl = "/app/";
             controller: "companyController",
             controllerAs: "companyList"
         })
-        .when("/Company/CompanyEdit", {
-            templateUrl: rootUrl + "Company/companyAdd.html/:id",
+        .when("/Company/CompanyEdit/:id", {
+            templateUrl: rootUrl + "Company/companyAdd.html",
             controller: "companyController",
             controllerAs: "companyList",
             resolve: {
@@ -87,6 +87,16 @@ angular.module('ReservationStudio').controller('companyController', function (co
         $('#confirmDeleteCompany').modal('hide');
     };
 });
+(function () {
+    angular.module("ReservationStudio").controller("companyEditController", ["companyService", "company", function (companyService, company) {
+        var controller = this;
+
+        controller.id = id;
+        controller.name = company.name;
+        controller.employees = company.employees;
+        controller.location = company.location;
+    }]);
+})
 angular.module('ReservationStudio').service('companyService', function ($q, $http, $location) {
     var companies = [];
     function loadCompanies() {
@@ -145,10 +155,12 @@ angular.module('ReservationStudio').service('companyService', function ($q, $htt
         companies = [];
     }
     return {
+        get: get,
         getCompanies: function () { return companies; },
         clearCompanies: clearCompanies,
         addCompany: addCompany,
-        deleteCompany: deleteCompany
+        deleteCompany: deleteCompany,
+        changeCompany: changeCompany
     };
 });
 angular.module('ReservationStudio').directive("ngCompanyDetails", function () {

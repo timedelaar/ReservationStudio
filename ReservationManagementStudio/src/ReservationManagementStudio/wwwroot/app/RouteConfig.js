@@ -19,8 +19,8 @@
             controller: "companyController",
             controllerAs: "companyList"
         })
-        .when("/Company/CompanyEdit", {
-            templateUrl: rootUrl + "Company/companyAdd.html/:id",
+        .when("/Company/CompanyEdit/:id", {
+            templateUrl: rootUrl + "Company/companyAdd.html",
             controller: "companyController",
             controllerAs: "companyList",
             resolve: {

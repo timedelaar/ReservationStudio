@@ -56,9 +56,11 @@
         companies = [];
     }
     return {
+        get: get,
         getCompanies: function () { return companies; },
         clearCompanies: clearCompanies,
         addCompany: addCompany,
-        deleteCompany: deleteCompany
+        deleteCompany: deleteCompany,
+        changeCompany: changeCompany
     };
 });
