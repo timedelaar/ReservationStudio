@@ -62,15 +62,37 @@ namespace ReservationAPI.Controllers
         // PUT api/values/5
         // UPDATE room
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody]Room room)
         {
+            if (room == null || room.Id != id)
+            {
+                return BadRequest();
+            }
+
+            var oldRoom = _DataContext.Rooms.Find(id);
+            if (oldRoom == null)
+            {
+                return NotFound();
+            }
+            oldRoom.RoomNumber = room.RoomNumber;
+            oldRoom.RoomDescription = room.RoomDescription;
+            oldRoom.MaxAmount = room.MaxAmount;
+
+            _DataContext.Rooms.Update(oldRoom);
+            return new NoContentResult();
         }
 
         // DELETE api/values/5
         // DELETE room
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            Room room = _DataContext.Rooms.Find(id);
+            if (room == null) { 
+                return NotFound();
+        }
+            _DataContext.Rooms.Remove(room);
+            return Ok(room);
         }
     }
 }
