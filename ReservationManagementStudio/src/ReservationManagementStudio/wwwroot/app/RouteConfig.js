@@ -19,10 +19,16 @@
             controller: "companyController",
             controllerAs: "companyList"
         })
-        .when("/Company/CompanyEdit", {
+        .when("/Company/CompanyEdit/:id", {
             templateUrl: rootUrl + "Company/companyAdd.html",
             controller: "companyController",
-            controllerAs: "companyList"
+            controllerAs: "companyList",
+            resolve: {
+                company: ["companyService", "$route", function ($company, $route) {
+                    var id = parseInt($route.current.params.id);
+                    return $company.get(id);
+                }]
+            }
         })
 		.when('/Reservation/', {
 			templateUrl: rootUrl + 'Reservation/reservations.html',

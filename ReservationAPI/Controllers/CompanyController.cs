@@ -37,9 +37,16 @@ namespace ReservationAPI.Controllers
 		/// <returns>The company corresponding to the id</returns>
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            Company company = _DataContext.Companies.Find(id);
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(company);
         }
 
 		/// <summary>
@@ -77,15 +84,11 @@ namespace ReservationAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody]Company company)
         {
-            if (id != company.Id)
-                return BadRequest();
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            if (_DataContext.Companies.Find(id) == null)
+            if (company == null || company.Id != id)
+            {
                 return NotFound();
-            _DataContext.Entry(company).State =
-                Microsoft.EntityFrameworkCore.EntityState.Modified;
-            return NoContent();
+            }
+            return NotFound();
         }
 
 		/// <summary>
@@ -100,6 +103,16 @@ namespace ReservationAPI.Controllers
             if (company == null)
                 return NotFound();
             _DataContext.Companies.Remove(company);
+
+            try
+            {
+                _DataContext.SaveChanges();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status304NotModified);
+            }
+
             return Ok(company);
         }
     }

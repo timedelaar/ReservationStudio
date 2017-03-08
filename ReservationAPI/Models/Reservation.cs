@@ -10,6 +10,7 @@ namespace ReservationAPI.Models
         public int Id { get; set; }
         public Company Company { get; set; }
         public Room Room { get; set; }
+        public DateTime Date { get; set; }
         public string DayPart { get; set; }
         public string Status { get; set; }
 

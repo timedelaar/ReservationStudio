@@ -19,13 +19,33 @@
     }
 
     function deleteCompany(company) {
-        debugger;
         $http({
             method: "DELETE",
-            url: appSettings.reservationServer + "Company",
-            data: company
+            url: appSettings.reservationServer + "Company/" + company.id
         })
         .then(function (response) {
+            loadCompanies();
+        });
+    }
+
+    function get(id) {
+        $http({
+            method: "GET",
+            url: appSettings.reservationServer + "Company/" + id
+        })
+            .then(function success(response) {
+                return response.data;
+            });
+    }
+
+    function changeCompany(company) {
+        $http({
+            method: "PUT",
+            url: appSettings.reservationServer + "Company/" + company.id,
+            data: { company: company }
+        })
+        .then(function (response) {
+            $location.path('/Company/');
             loadCompanies();
         });
     }
@@ -36,9 +56,11 @@
         companies = [];
     }
     return {
+        get: get,
         getCompanies: function () { return companies; },
         clearCompanies: clearCompanies,
         addCompany: addCompany,
-        deleteCompany: deleteCompany
+        deleteCompany: deleteCompany,
+        changeCompany: changeCompany
     };
 });
