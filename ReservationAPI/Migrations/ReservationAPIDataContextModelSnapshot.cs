@@ -36,7 +36,19 @@ namespace ReservationAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int?>("CompanyId");
+
+                    b.Property<string>("DayPart");
+
+                    b.Property<int?>("RoomId");
+
+                    b.Property<string>("Status");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Reservation");
                 });
@@ -46,9 +58,26 @@ namespace ReservationAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("MaxAmount");
+
+                    b.Property<string>("RoomDescription");
+
+                    b.Property<int>("RoomNumber");
+
                     b.HasKey("Id");
 
                     b.ToTable("Room");
+                });
+
+            modelBuilder.Entity("ReservationAPI.Models.Reservation", b =>
+                {
+                    b.HasOne("ReservationAPI.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+
+                    b.HasOne("ReservationAPI.Models.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId");
                 });
         }
     }

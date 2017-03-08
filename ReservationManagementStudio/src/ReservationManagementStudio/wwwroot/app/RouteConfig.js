@@ -20,14 +20,14 @@
             controllerAs: "companyList"
         })        
 		.when('/Reservation/', {
-			templateUrl: rootUrl + 'Reservation/Index.html',
-			controller: 'ReservationController',
-			controllerAs: 'ctrl',
-			resolve: {
-				reservations: ['ReservationService', function ($reservation) {
-					return $reservation.getList();
-				}]
-			}
+			templateUrl: rootUrl + 'Reservation/reservations.html',
+			controller: 'reservationController',
+			//controllerAs: "ctrlReservation",
+			//resolve: {
+			//    reservations: ['ReservationService', function ($reservation) {
+			//        return $reservation.getList();
+			//    }]
+			//}
 		})
 		.when('/Room/', {
 			templateUrl: rootUrl + 'Room/room.html',

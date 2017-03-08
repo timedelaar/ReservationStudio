@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Models;
 using Microsoft.AspNetCore.Http;
 
-
 namespace ReservationAPI.Controllers
 {
     [Route("api/[controller]")]

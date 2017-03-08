@@ -10,7 +10,9 @@ namespace ReservationAPI.Models
         public int Id { get; set; }
         public Company Company { get; set; }
         public Room Room { get; set; }
+        public string DayPart { get; set; }
         public string Status { get; set; }
+
     }
 
     public static class StatusConstants
@@ -18,5 +20,12 @@ namespace ReservationAPI.Models
         public const string Pending = "Pending";
         public const string Confirmed = "Confirmed";
         public const string Canceled = "Canceled";
+    }
+
+    public static class DayPartConstants
+    {
+        public const string Morning = "Morning";
+        public const string Afternoon = "Afternoon";
+        public const string Evening = "Evening";
     }
 }
