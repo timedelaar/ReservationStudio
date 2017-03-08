@@ -128,13 +128,15 @@ angular.module('ReservationStudio').service('companyService', function ($q, $htt
     }
 
     function get(id) {
-        $http({
+        return $http({
             method: "GET",
             url: appSettings.reservationServer + "Company/" + id
         })
             .then(function success(response) {
                 return response.data;
             });
+
+
     }
 
     function changeCompany(company) {

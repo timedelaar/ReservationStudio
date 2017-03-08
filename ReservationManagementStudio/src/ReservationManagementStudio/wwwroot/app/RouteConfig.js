@@ -21,7 +21,7 @@
         })
         .when("/Company/CompanyEdit/:id", {
             templateUrl: rootUrl + "Company/companyAdd.html",
-            controller: "companyController",
+            controller: "companyEditController",
             controllerAs: "companyList",
             resolve: {
                 company: ["companyService", "$route", function ($company, $route) {
