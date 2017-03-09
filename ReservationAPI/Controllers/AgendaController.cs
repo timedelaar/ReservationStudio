@@ -20,44 +20,39 @@ namespace ReservationAPI.Controllers
 			_DataContext = DataContext;
 		}
 
-        // GET: api/values
+        // GET: api/Agenda/
         [HttpGet]
-        public IEnumerable<AgendaViewModel> Get()
+        public IEnumerable<AgendaViewModel> Get(DateTime startDate, DateTime endDate)
         {
-			var query = from room in _DataContext.Rooms
-						join reservation in _DataContext.Reservations on room.Id equals reservation.Id
-						select new
+			var start = startDate.Date;
+			var end = endDate.Date;
+			var query = from reservation in _DataContext.Reservations
+						 join company in _DataContext.Companies on reservation.CompanyId equals company.Id
+						where reservation.Date >= startDate && reservation.Date <= endDate
+						 select new ReservationViewModel
+						 {
+							 Id = reservation.Id,
+							 Date = reservation.Date,
+							 DayPart = reservation.DayPart,
+							 Status = reservation.Status,
+							 Company = company,
+							 Room = new Room
+							 {
+								 Id = reservation.RoomId
+							 }
+						 };
+
+			var query2 = from room in _DataContext.Rooms
+						join reservation in query on room.Id equals reservation.Room.Id into reservations
+						select new AgendaViewModel
 						{
-							ReservationId = reservation.Id,
-							RoomId = room.Id
+							Room = room,
+							Reservations = reservations
 						};
 
-			return null;
-        }
+			var result = query2.ToList();
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+			return result;
         }
     }
 }

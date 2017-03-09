@@ -1,0 +1,32 @@
+﻿<div class="modal-body">
+	<form name="formReservation" role="form">
+		<div class="form-group">
+			<label for="selCompany" class="col-sm-2 control-label">Company</label>
+			<select class="form-control" id="selCompany" ng-model="ctrl.reservation.companyId" required>
+				<option ng-value="company.id" ng-repeat="company in ctrl.companies">{{company.name}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="selRoom" class="col-sm-2 control-label">Room</label>
+			<select class="form-control" id="selRoom" ng-model="ctrl.reservation.roomId" required>
+				<option ng-value="room.id" ng-repeat="room in ctrl.rooms">{{room.roomDescription}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="selDayPart" class="col-sm-2 control-label">DayPart</label>
+			<select class="form-control" id="selDayPart" ng-model="ctrl.reservation.dayPart" required>
+				<option ng-value="0">Morning (8:00 - 12:00)</option>
+				<option ng-value="1">Afternoon (13:00 - 18:00)</option>
+				<option ng-value="2">Evening (19:00 - 00:00)</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Status</label>
+			<input type="radio" ng-model="ctrl.reservation.status" value="Confirmed">Confirmed
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" ng-click="ctrl.cancel()">Close</button>
+			<button type="button" class="btn btn-primary" ng-disabled="!formReservation.$valid" ng-click="ctrl.save()">Save</button>
+		</div>
+	</form>
+</div>

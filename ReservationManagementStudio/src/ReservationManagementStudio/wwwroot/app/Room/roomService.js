@@ -16,6 +16,15 @@
     	});
     }
 
+    function getList() {
+    	return $http({
+    		method: "GET",
+    		url: appSettings.reservationServer + "Room"
+    	}).then(function success(response) {
+    		return response.data;
+    	});
+    }
+
     function addRoom(room) {
         $http({
             method: "POST",
@@ -55,7 +64,8 @@
     }
 
     return {
-		get: get,
+    	get: get,
+		getList: getList,
         getRooms: function () { return rooms },
         clearRooms: clearRooms,
         addRoom: addRoom,

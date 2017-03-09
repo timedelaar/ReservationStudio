@@ -10,12 +10,6 @@ namespace ReservationAPI.ViewModels
 	{
 		public Room Room { get; set; }
 
-		public DateTime Date { get; set; }
-
-		public Reservation Morning { get; set; }
-
-		public Reservation Afternoon { get; set; }
-
-		public Reservation Evening { get; set; }
+		public IEnumerable<ReservationViewModel> Reservations { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Models;
+using ReservationAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 
 namespace ReservationAPI.Controllers
@@ -21,19 +22,53 @@ namespace ReservationAPI.Controllers
         //Get a list of all reservations
         //GET: api/values
 		[HttpGet]
-        public IEnumerable<Reservation> Get()
+        public IEnumerable<ReservationViewModel> Get()
         {
-            var reservationList = _DataContext.Reservations.ToList<Reservation>();
-            return reservationList;
+			var query = from reservation in _DataContext.Reservations
+								  join room in _DataContext.Rooms on reservation.RoomId equals room.Id
+								  join company in _DataContext.Companies on reservation.CompanyId equals company.Id
+								  select new ReservationViewModel
+								  {
+									  Id = reservation.Id,
+									  Date = reservation.Date,
+									  DayPart = reservation.DayPart,
+									  Status = reservation.Status,
+									  Company = company,
+									  Room = room
+								  };
+
+            return query.ToList();
         }
 
         // Get a single reservation by Id
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
-        }
+			var query = from reservation in _DataContext.Reservations
+									   join room in _DataContext.Rooms on reservation.RoomId equals room.Id
+									   join company in _DataContext.Companies on reservation.CompanyId equals company.Id
+									   where reservation.Id == id
+									   select new ReservationViewModel
+									   {
+										   Id = reservation.Id,
+										   Date = reservation.Date,
+										   DayPart = reservation.DayPart,
+										   Status = reservation.Status,
+										   Company = company,
+										   Room = room
+									   };
+
+			var result = query.First();
+
+
+			if (result == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(result);
+		}
 
         // Create a new reservation
         // POST api/values
@@ -75,7 +110,22 @@ namespace ReservationAPI.Controllers
                 return NotFound();
             }
 
+			item.CompanyId = reservation.CompanyId;
+			item.Date = reservation.Date;
+			item.DayPart = reservation.DayPart;
+			item.RoomId = reservation.RoomId;
+			item.Status = reservation.Status;
+
             _DataContext.Reservations.Update(item);
+
+			try
+			{
+				_DataContext.SaveChanges();
+			}
+			catch
+			{
+				return StatusCode(StatusCodes.Status409Conflict);
+			}
             return new NoContentResult();
         }
 
@@ -91,7 +141,16 @@ namespace ReservationAPI.Controllers
             }
 
             _DataContext.Reservations.Remove(item);
-            return new NoContentResult();
+
+			try
+			{
+				_DataContext.SaveChanges();
+			}
+			catch
+			{
+				return StatusCode(StatusCodes.Status410Gone);
+			}
+			return new NoContentResult();
         }
     }
 }

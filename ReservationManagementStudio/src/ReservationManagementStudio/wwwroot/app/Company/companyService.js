@@ -38,6 +38,16 @@
         });
     }
 
+    function getList() {
+    	return $http({
+    		method: "GET",
+    		url: appSettings.reservationServer + "Company"
+    	})
+        .then(function success(response) {
+        	return response.data;
+        });
+    }
+
     function changeCompany(company) {
         $http({
             method: "PUT",
@@ -56,7 +66,8 @@
         companies = [];
     }
     return {
-        get: get,
+    	get: get,
+		getList: getList,
         getCompanies: function () { return companies; },
         clearCompanies: clearCompanies,
         addCompany: addCompany,

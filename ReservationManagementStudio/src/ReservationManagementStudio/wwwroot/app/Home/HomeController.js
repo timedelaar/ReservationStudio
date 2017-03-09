@@ -1,8 +1,8 @@
 ﻿(function () {
     'use strict';
-    angular.module('ReservationStudio').controller('HomeController', ['AgendaService', '$filter', HomeController]);
+    angular.module('ReservationStudio').controller('HomeController', ['AgendaService', 'reservationFactory', '$filter', '$uibModal', '$route', HomeController]);
 
-    function HomeController($agenda, $filter) {
+    function HomeController($agenda, $reservation, $filter, $uibModal, $route) {
         var controller = this;
 
         controller.date = new Date(Date.now());
@@ -25,10 +25,10 @@
         }
 
         function filterRooms(value, index, array) {
-            if (!controller.searchRoomNumber)
+            if (!controller.searchRoom)
                 return true;
 
-            return value.room.roomNumber.indexOf(controller.searchRoomNumber) != -1;
+            return value.room.roomDescription.toLowerCase().indexOf(controller.searchRoom.toLowerCase()) != -1;
         }
 
         function getDates() {
@@ -42,14 +42,14 @@
 
         function getReservation(reservations, date) {
             var filteredReservations = $filter('filter')(reservations, function (value, index, array) {
-                return date.toLocaleDateString() == value.date.toLocaleDateString();
+                return date.toLocaleDateString() == new Date(value.date).toLocaleDateString();
             });
-            if (filteredReservations.length < 3) {
-                for (var i = 0, num = 3 - filteredReservations.length; i < num; i++) {
-                    filteredReservations.push('');
-                }
+            var filledReservations = ['', '', ''];
+            for (var i = 0; i < filteredReservations.length; i++) {
+            	var reservation = filteredReservations[i];
+            	filledReservations.splice(reservation.dayPart, 1, reservation);
             }
-            return filteredReservations;
+            return filledReservations;
         }
 
         function openDatepicker() {
@@ -63,9 +63,48 @@
             });
         }
 
-        function viewReservation(reservation, time) {
-            console.log('reservation', reservation);
-            console.log('time:' + time);
+        function viewReservation(reservation, roomId, date, dayPart) {
+        	var modalInstance = $uibModal.open({
+        		templateUrl: '/app/Reservation/viewReservation.html',
+        		controller: 'ViewReservationController',
+        		controllerAs: 'ctrl',
+        		resolve: {
+        			companies: ['companyService', function ($companies) {
+        				return $companies.getList();
+        			}],
+        			rooms: ['RoomService', function ($rooms) {
+        				return $rooms.getList();
+        			}],
+        			reservation: function () {
+        				return reservation;
+        			},
+        			roomId: function () {
+        				return roomId;
+        			},
+        			date: function () {
+        				return date;
+        			},
+        			dayPart: function () {
+        				return dayPart;
+        			}
+        		}
+        	});
+
+        	modalInstance.result.then(function save(reservation) {
+        		if (typeof (reservation.date) === 'string')
+        			reservation.date = new Date(reservation.date);
+
+        		if (angular.isDefined(reservation.id) && reservation.id !== null) {
+        			$reservation.updateReservation(reservation).then(function () {
+        				$route.reload();
+        			});
+        		}
+        		else {
+        			$reservation.addReservation(reservation).then(function () {
+        				$route.reload();
+        			});
+        		}
+        	});
         }
     }
 })();

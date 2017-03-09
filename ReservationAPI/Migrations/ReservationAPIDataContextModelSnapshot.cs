@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using ReservationAPI;
+using ReservationAPI.Models;
 
 namespace ReservationAPI.Migrations
 {
@@ -38,11 +39,13 @@ namespace ReservationAPI.Migrations
 
                     b.Property<int?>("CompanyId");
 
-                    b.Property<string>("DayPart");
+                    b.Property<DateTime>("Date");
+
+                    b.Property<int>("DayPart");
 
                     b.Property<int?>("RoomId");
 
-                    b.Property<string>("Status");
+                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 
