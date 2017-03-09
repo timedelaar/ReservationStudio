@@ -1,5 +1,5 @@
 var appSettings = {
-	reservationServer: "localHost:52321/api/"
+	reservationServer: "localhost:52321/api/"
 }
 
 describe("Tests: RoomService", function () {
