@@ -25,7 +25,7 @@ namespace ReservationAPI.Controllers
         public IEnumerable<AgendaViewModel> Get()
         {
 			var query = from room in _DataContext.Rooms
-						join reservation in _DataContext.Reservations on room.Id equals reservation.RoomId into reservations
+						join reservation in _DataContext.Reservations on room.Id equals reservation.Room.Id into reservations
 						select new AgendaViewModel
 						{
 							Room = room,
