@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ReservationAPI.Models;
+using ReservationAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 
 namespace ReservationAPI.Controllers
@@ -23,7 +24,7 @@ namespace ReservationAPI.Controllers
 		[HttpGet]
         public IEnumerable<Reservation> Get()
         {
-            var reservationList = _DataContext.Reservations.ToList<Reservation>();
+            var reservationList = _DataContext.Reservations.ToList();
             return reservationList;
         }
 
