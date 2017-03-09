@@ -1,4 +1,4 @@
-﻿var appSettings = {
+var appSettings = {
 	reservationServer: "localHost:52321/api/"
 }
 
@@ -22,6 +22,32 @@ describe("Tests: RoomService", function () {
 		var result;
 		RoomService.getList().then(function (rooms) {
 			result = rooms;
+		});
+		httpBackend.flush();
+		expect(result.length).toBe(3);
+	});
+});
+
+describe("Tests: ReservationService", function () {
+	var base = appSettings.reservationServer;
+
+	var CompanyService, httpBackend;
+    
+	beforeEach(function () {
+		module("ReservationStudio");
+
+		inject(function (_companyService_, $httpBackend) {
+			CompanyService = _companyService_;
+			httpBackend = $httpBackend;
+
+			httpBackend.when("GET", base + "Company").respond([{}, {}, {}]);
+		});
+	});
+
+	it("gets all reservations", function () {
+		var result;
+		CompanyService.getList().then(function (reservations) {
+			result = reservations;
 		});
 		httpBackend.flush();
 		expect(result.length).toBe(3);
