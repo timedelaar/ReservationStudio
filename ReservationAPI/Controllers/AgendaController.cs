@@ -22,17 +22,35 @@ namespace ReservationAPI.Controllers
 
         // GET: api/Agenda/
         [HttpGet]
-        public IEnumerable<AgendaViewModel> Get()
+        public IEnumerable<AgendaViewModel> Get(DateTime startDate, DateTime endDate)
         {
-			var query = from room in _DataContext.Rooms
-						join reservation in _DataContext.Reservations on room.Id equals reservation.Room.Id into reservations
+			var start = startDate.Date;
+			var end = endDate.Date;
+			var query = from reservation in _DataContext.Reservations
+						 join company in _DataContext.Companies on reservation.CompanyId equals company.Id
+						where reservation.Date >= startDate && reservation.Date <= endDate
+						 select new ReservationViewModel
+						 {
+							 Id = reservation.Id,
+							 Date = reservation.Date,
+							 DayPart = reservation.DayPart,
+							 Status = reservation.Status,
+							 Company = company,
+							 Room = new Room
+							 {
+								 Id = reservation.RoomId
+							 }
+						 };
+
+			var query2 = from room in _DataContext.Rooms
+						join reservation in query on room.Id equals reservation.Room.Id into reservations
 						select new AgendaViewModel
 						{
 							Room = room,
 							Reservations = reservations
 						};
 
-			var result = query.ToList();
+			var result = query2.ToList();
 
 			return result;
         }

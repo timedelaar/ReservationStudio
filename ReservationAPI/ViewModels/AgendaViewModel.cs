@@ -10,6 +10,6 @@ namespace ReservationAPI.ViewModels
 	{
 		public Room Room { get; set; }
 
-		public IEnumerable<Reservation> Reservations { get; set; }
+		public IEnumerable<ReservationViewModel> Reservations { get; set; }
     }
 }

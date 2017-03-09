@@ -18,7 +18,7 @@
         };
 
         reservationFactory.updateReservation = function (reservation) {
-            return $http.put(urlBase + reservation.ID, reservation)
+            return $http.put(urlBase + reservation.id, reservation)
         };
 
         reservationFactory.deleteReservation = function (id) {

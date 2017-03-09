@@ -21,11 +21,11 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="reservation in reservations">
-                        <td>{{reservation.Id}}</td>
-                        <td>{{reservation.Company}}</td>
-                        <td>{{reservation.Room}}</td>
-                        <td>{{reservation.DayPart}}</td>
-                        <td>{{reservation.Status}}</td>
+                        <td>{{reservation.id}}</td>
+                        <td>{{reservation.company.name}}</td>
+                        <td>{{reservation.room.roomDescription}}</td>
+                        <td>{{dayPartEnum[reservation.dayPart]}}</td>
+                        <td>{{statusEnum[reservation.status]}}</td>
                         <td>
                             <a href="javascript:void(0)" ng-click="updateReservation(reservation.Id)">edit</a> | <a href="javascript:void(0)" ng-click="deleteReservation(reservation.Id)">delete</a>
                         </td>

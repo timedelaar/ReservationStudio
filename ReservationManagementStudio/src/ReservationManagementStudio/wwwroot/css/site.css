@@ -42,7 +42,8 @@
 	padding: 4px;
 }
 
-.agenda > tbody > tr > td > .col-sm-4 {
+.agenda > tbody > tr > td > .col-sm-4,
+.agenda > tbody > tr > td > .col-md-4 {
 	padding: 0px 2px;
 }
 

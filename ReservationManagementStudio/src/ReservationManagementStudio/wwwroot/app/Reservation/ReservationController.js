@@ -1,7 +1,8 @@
 ﻿angular.module('ReservationStudio')
     .controller('reservationController', ['$scope', '$window', 'reservationFactory', 'companyService', 'RoomService',
         function ($scope, $window, ReservationFactory, companyService, roomService) {
-
+        	$scope.dayPartEnum = ["Morning", "Afternoon", "Evening"];
+        	$scope.statusEnum = ["Pending", "Confirmed", "Canceled"];
 
             $scope.reservations;
             companyService.getList().then(function (companies) {
@@ -15,8 +16,6 @@
                 ReservationFactory.getReservations()
                     .then(function (response) {
                         $scope.reservations = response.data;
-                    }, function (error) {
-                        $window.alert('Unable to load reservation data: ' + error.message);
                     });
             }
 
@@ -46,10 +45,7 @@
 
                 ReservationFactory.addReservation($scope.newReservation)
                     .then(function (response) {
-                        $window.alert('Inserted reservation! Refreshing reservation list.');
-                        $scope.reservations.push(response.data);
-                    }, function (error) {
-                        $window.alert('Unable to insert reservation: ' + error.message);
+                        getReservations();
                     });
             };
 

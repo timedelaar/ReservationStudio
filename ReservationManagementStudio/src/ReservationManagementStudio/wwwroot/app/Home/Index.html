@@ -9,7 +9,7 @@
 	</div>
 	<div class="col-sm-2">
 		<div class="form-group has-feedback">
-			<input type="text" class="form-control" ng-model="ctrl.searchRoomNumber" />
+			<input type="text" class="form-control" ng-model="ctrl.searchRoom" />
 			<span class="glyphicon glyphicon-search form-control-feedback"></span>
 		</div>
 	</div>
@@ -24,11 +24,11 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="reservation in ctrl.reservations | filter: ctrl.filterRooms">
-					<td class="text-center" style="width: 40px">{{reservation.room.roomNumber}}</td>
+				<tr ng-repeat="room in ctrl.reservations | filter: ctrl.filterRooms">
+					<td class="text-center" style="width: 40px">{{room.room.roomDescription}}</td>
 					<td ng-repeat="date in ctrl.dates" style="width: calc((100% - 40px) / {{ctrl.visibleDays + 1}})" class="row">
-						<span ng-repeat="reservation in ctrl.getReservation(reservation.reservations, date) | orderBy: 'time' as ordered_result track by $index" class="col-md-4">
-							<span class="agenda-reservation" ng-class="{ 'free': !reservation.company, 'reserved': reservation.company}" ng-click="ctrl.viewReservation(reservation, $index)">
+						<span ng-repeat="reservation in ctrl.getReservation(room.reservations, date) track by $index" class="col-md-4">
+							<span class="agenda-reservation" ng-class="{ 'free': !reservation.id, 'reserved': reservation.id}" ng-click="ctrl.viewReservation(reservation, room.room.id, date, $index)">
 								{{reservation.company.name}}
 							</span>
 						</span>
