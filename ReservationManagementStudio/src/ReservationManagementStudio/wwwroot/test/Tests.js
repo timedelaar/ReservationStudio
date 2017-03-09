@@ -1,5 +1,5 @@
 var appSettings = {
-	reservationServer: "localhost:52321/api/"
+	reservationServer: "localhost:5000/api/"
 }
 
 describe("Tests: RoomService", function () {
@@ -28,7 +28,7 @@ describe("Tests: RoomService", function () {
 	});
 });
 
-describe("Tests: ReservationService", function () {
+describe("Tests: CompanyService", function () {
 	var base = appSettings.reservationServer;
 
 	var CompanyService, httpBackend;
@@ -44,10 +44,10 @@ describe("Tests: ReservationService", function () {
 		});
 	});
 
-	it("gets all reservations", function () {
+	it("gets all companies", function () {
 		var result;
-		CompanyService.getList().then(function (reservations) {
-			result = reservations;
+		CompanyService.getList().then(function (companies) {
+			result = companies;
 		});
 		httpBackend.flush();
 		expect(result.length).toBe(3);
